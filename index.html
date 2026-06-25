@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sivaganesh — Designer with 5+ years crafting marketing, branding, web & B2B software experiences." />
+  <meta name="author" content="Sivaganesh" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="Sivaganesh — Designer" />
+  <meta property="og:description" content="5+ years designing for marketing, branding, web & B2B software." />
+  <meta property="og:image"       content="https://www.figma.com/api/mcp/asset/59ed6a16-4f04-4e12-ae0d-44725fa3dd37" />
+
+  <title>Sivaganesh — Designer</title>
+
+  <!-- Preconnect for fast font load -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Design System (tokens first) -->
+  <link rel="stylesheet" href="assets/css/ds.css" />
+  <!-- Component styles -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <!--
+    NOTE: Image URLs below are from Figma MCP and expire in ~7 days.
+    Replace them with your own hosted images at:
+      assets/images/<filename>.webp
+    before deploying to production.
+  -->
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar" aria-label="Primary navigation">
+    <span class="navbar__logo" aria-label="Sivaganesh — Home">SG</span>
+    <a href="#works" class="btn btn--nav">See my works</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE WRAPPER  (f5f5f5 bg, gap between section cards)
+  ═══════════════════════════════════════════════════════ -->
+  <main class="page-wrapper">
+
+    <!-- ─────────────────────────────────────────────────
+         HERO
+    ───────────────────────────────────────────────── -->
+    <section class="section hero" aria-label="Hero">
+
+      <!-- Banner image — parallax target -->
+      <div class="hero__image-wrap">
+        <img
+          class="hero__image"
+          src="https://www.figma.com/api/mcp/asset/59ed6a16-4f04-4e12-ae0d-44725fa3dd37"
+          alt="Botanical hero background"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <!-- Name + bio + download -->
+      <div class="hero__content">
+        <h1 class="hero__name" aria-label="Sivaganesh">SIVAGANESH</h1>
+
+        <div class="hero__meta">
+          <p class="hero__bio" data-reveal>
+            5+ years of experience in creating meaningful designs that assist
+            marketers to step forward to their goal.
+          </p>
+          <a href="resume.pdf" class="btn btn--dark" data-reveal download>
+            Download resume
+            <img
+              class="btn__icon"
+              src="https://www.figma.com/api/mcp/asset/7c3d7e1d-62a0-4627-8f14-769ca29f7c62"
+              alt=""
+              aria-hidden="true"
+            />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         COMPANIES
+    ───────────────────────────────────────────────── -->
+    <section class="section companies" id="companies" aria-label="Companies">
+
+      <div class="section-label" data-reveal>
+        <img
+          class="section-label__dot"
+          src="https://www.figma.com/api/mcp/asset/3820dca5-0584-461b-9d59-08fa03fd99db"
+          alt=""
+          aria-hidden="true"
+        />
+        Companies I have worked with
+      </div>
+
+      <div class="companies__grid" data-stagger>
+        <div class="companies__row">
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/5a3576c2-dba6-46b3-8336-975773dc4d89" alt="Facilio" loading="lazy" />
+          </div>
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/d3152424-e689-49b7-a214-46782fa29281" alt="Kissflow" loading="lazy" />
+          </div>
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/c8e9db93-6bb3-445a-a83e-5478af300f15" alt="Jisr" loading="lazy" />
+          </div>
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/dbb6dde7-375a-4253-851f-e891efc849bf" alt="Zapro" loading="lazy" />
+          </div>
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/fc68060a-625e-4293-96ec-e4bdfd0b3fd0" alt="Atlas Systems" loading="lazy" />
+          </div>
+        </div>
+        <div class="companies__row">
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/c2949ca8-abf2-4838-b973-12233697bd78" alt="Dreamdaa" loading="lazy" />
+          </div>
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/1cb3f26d-987c-48a9-9529-f575384274c4" alt="Figma" loading="lazy" />
+          </div>
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/0a527e39-9d5c-47b5-963d-151f72a7828a" alt="ADPList" loading="lazy" />
+          </div>
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/8fd417ad-a1bb-4392-826d-5b85e5d9b7bd" alt="Salesforce" loading="lazy" />
+          </div>
+          <div class="companies__item">
+            <img src="https://www.figma.com/api/mcp/asset/5075e472-6db5-411d-a4f0-7173efdaffdc" alt="Scarlettt" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         ABOUT
+    ───────────────────────────────────────────────── -->
+    <section class="section about" id="about" aria-label="About">
+
+      <div class="section-label" data-reveal>
+        <img
+          class="section-label__dot"
+          src="https://www.figma.com/api/mcp/asset/3820dca5-0584-461b-9d59-08fa03fd99db"
+          alt=""
+          aria-hidden="true"
+        />
+        Quick intro about myself
+      </div>
+
+      <p class="about__quote split-text">
+        Since 2020, I've been designing for marketing, branding, web, B2B
+        Software. I love everything that has to do with design and consumer
+        technology.
+      </p>
+
+      <div class="about__cta" data-reveal>
+        <a href="#contact" class="btn btn--outline">
+          To know more about me
+          <img
+            class="btn__icon"
+            src="https://www.figma.com/api/mcp/asset/fd8bd379-0059-4b7a-982c-de8a9a221eb8"
+            alt=""
+            aria-hidden="true"
+          />
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         AREAS
+    ───────────────────────────────────────────────── -->
+    <section class="section areas" id="works" data-section aria-label="Areas of expertise">
+
+      <div class="section-label" data-reveal>
+        <img
+          class="section-label__dot"
+          src="https://www.figma.com/api/mcp/asset/3820dca5-0584-461b-9d59-08fa03fd99db"
+          alt=""
+          aria-hidden="true"
+        />
+        Areas I have stepped in
+      </div>
+
+      <div class="areas__grid" data-stagger>
+
+        <article class="area-card">
+          <div class="area-card__bg" aria-hidden="true">
+            <img
+              src="https://www.figma.com/api/mcp/asset/5a9c8b84-3cd9-4369-b5af-d6cbe3ac7d40"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <span class="area-card__num">01</span>
+          <span class="area-card__title">Visual design</span>
+        </article>
+
+        <article class="area-card">
+          <div class="area-card__bg" aria-hidden="true">
+            <img
+              src="https://www.figma.com/api/mcp/asset/d2b8c21d-eb1f-4fe1-959a-875a4ac61212"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <span class="area-card__num">02</span>
+          <span class="area-card__title">Development</span>
+        </article>
+
+        <article class="area-card">
+          <div class="area-card__bg" aria-hidden="true">
+            <img
+              src="https://www.figma.com/api/mcp/asset/5a9c8b84-3cd9-4369-b5af-d6cbe3ac7d40"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <span class="area-card__num">03</span>
+          <span class="area-card__title">Marketing</span>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         SUCCESS STORIES
+    ───────────────────────────────────────────────── -->
+    <section class="section stories" aria-label="Success stories">
+
+      <div class="section-label" data-reveal>
+        <img
+          class="section-label__dot"
+          src="https://www.figma.com/api/mcp/asset/3820dca5-0584-461b-9d59-08fa03fd99db"
+          alt=""
+          aria-hidden="true"
+        />
+        Success story
+      </div>
+
+      <div class="stories__list">
+
+        <!-- Story 1 — Zapro -->
+        <article class="story-card" data-reveal>
+          <div class="story-card__image-wrap">
+            <img
+              src="https://www.figma.com/api/mcp/asset/d2b8c21d-eb1f-4fe1-959a-875a4ac61212"
+              alt="Zapro — AI procurement platform"
+              loading="lazy"
+            />
+            <a href="#" class="story-card__view" aria-label="View Zapro case study">
+              View case study
+              <img
+                src="https://www.figma.com/api/mcp/asset/72ecec2c-2ace-4472-b54a-176daa99f1f6"
+                alt=""
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+          <div class="story-card__info">
+            <div class="story-card__top">
+              <div class="story-card__logo">
+                <img
+                  src="https://www.figma.com/api/mcp/asset/e6f48fb3-d6b3-4bba-8e6a-c0888103c6fb"
+                  alt="Zapro"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="story-card__title split-text">
+                AI-first procurement platform for modern businesses
+              </h3>
+            </div>
+            <div class="story-card__metrics" data-stagger>
+              <div class="metric">
+                <span class="metric__value" data-count="70" data-suffix="%">70%</span>
+                <span class="metric__label">Faster Project Delivery</span>
+              </div>
+              <div class="metric">
+                <span class="metric__value" data-count="500" data-suffix="+">500+</span>
+                <span class="metric__label">Projects Delivered</span>
+              </div>
+              <div class="metric">
+                <span class="metric__value" data-count="98" data-suffix="%">98%</span>
+                <span class="metric__label">Client Satisfaction</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 2 — Kissflow -->
+        <article class="story-card" data-reveal>
+          <div class="story-card__image-wrap">
+            <img
+              src="https://www.figma.com/api/mcp/asset/d2b8c21d-eb1f-4fe1-959a-875a4ac61212"
+              alt="Kissflow — workflow automation"
+              loading="lazy"
+            />
+            <a href="#" class="story-card__view" aria-label="View Kissflow case study">
+              View case study
+              <img
+                src="https://www.figma.com/api/mcp/asset/72ecec2c-2ace-4472-b54a-176daa99f1f6"
+                alt=""
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+          <div class="story-card__info">
+            <div class="story-card__top">
+              <div class="story-card__logo">
+                <img
+                  src="https://www.figma.com/api/mcp/asset/d3152424-e689-49b7-a214-46782fa29281"
+                  alt="Kissflow"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="story-card__title split-text">
+                No-code workflow automation for enterprises at scale
+              </h3>
+            </div>
+            <div class="story-card__metrics" data-stagger>
+              <div class="metric">
+                <span class="metric__value" data-count="3" data-suffix="×">3×</span>
+                <span class="metric__label">Increase in User Adoption</span>
+              </div>
+              <div class="metric">
+                <span class="metric__value" data-count="200" data-suffix="+">200+</span>
+                <span class="metric__label">Enterprise Clients</span>
+              </div>
+              <div class="metric">
+                <span class="metric__value" data-count="40" data-suffix="%">40%</span>
+                <span class="metric__label">Reduction in Support Tickets</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 3 — Facilio -->
+        <article class="story-card" data-reveal>
+          <div class="story-card__image-wrap">
+            <img
+              src="https://www.figma.com/api/mcp/asset/d2b8c21d-eb1f-4fe1-959a-875a4ac61212"
+              alt="Facilio — facility operations"
+              loading="lazy"
+            />
+            <a href="#" class="story-card__view" aria-label="View Facilio case study">
+              View case study
+              <img
+                src="https://www.figma.com/api/mcp/asset/72ecec2c-2ace-4472-b54a-176daa99f1f6"
+                alt=""
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+          <div class="story-card__info">
+            <div class="story-card__top">
+              <div class="story-card__logo">
+                <img
+                  src="https://www.figma.com/api/mcp/asset/5a3576c2-dba6-46b3-8336-975773dc4d89"
+                  alt="Facilio"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="story-card__title split-text">
+                Connected facility operations platform for global real estate
+              </h3>
+            </div>
+            <div class="story-card__metrics" data-stagger>
+              <div class="metric">
+                <span class="metric__value" data-count="60" data-suffix="%">60%</span>
+                <span class="metric__label">Faster Onboarding</span>
+              </div>
+              <div class="metric">
+                <span class="metric__value" data-count="50" data-suffix="+">50+</span>
+                <span class="metric__label">Global Deployments</span>
+              </div>
+              <div class="metric">
+                <span class="metric__value" data-count="95" data-suffix="%">95%</span>
+                <span class="metric__label">Customer Retention Rate</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 4 — Jisr -->
+        <article class="story-card" data-reveal>
+          <div class="story-card__image-wrap">
+            <img
+              src="https://www.figma.com/api/mcp/asset/d2b8c21d-eb1f-4fe1-959a-875a4ac61212"
+              alt="Jisr — HR and payroll software"
+              loading="lazy"
+            />
+            <a href="#" class="story-card__view" aria-label="View Jisr case study">
+              View case study
+              <img
+                src="https://www.figma.com/api/mcp/asset/72ecec2c-2ace-4472-b54a-176daa99f1f6"
+                alt=""
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+          <div class="story-card__info">
+            <div class="story-card__top">
+              <div class="story-card__logo">
+                <img
+                  src="https://www.figma.com/api/mcp/asset/c8e9db93-6bb3-445a-a83e-5478af300f15"
+                  alt="Jisr"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="story-card__title split-text">
+                Modern HR &amp; payroll software built for the Arab world
+              </h3>
+            </div>
+            <div class="story-card__metrics" data-stagger>
+              <div class="metric">
+                <span class="metric__value" data-count="80" data-suffix="%">80%</span>
+                <span class="metric__label">Reduction in HR Admin Time</span>
+              </div>
+              <div class="metric">
+                <span class="metric__value" data-count="1000" data-suffix="+">1000+</span>
+                <span class="metric__label">Companies on Platform</span>
+              </div>
+              <div class="metric">
+                <span class="metric__value" data-count="99" data-suffix="%">99%</span>
+                <span class="metric__label">Payroll Accuracy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         TESTIMONIALS
+    ───────────────────────────────────────────────── -->
+    <section class="section testimonials" aria-label="Testimonials">
+
+      <div class="section-label" data-reveal>
+        <img
+          class="section-label__dot"
+          src="https://www.figma.com/api/mcp/asset/1abaefea-3210-45ac-92ef-a3c1a57e849b"
+          alt=""
+          aria-hidden="true"
+        />
+        Testimonial
+      </div>
+
+      <div class="testimonials__grid" data-stagger>
+
+        <figure class="testimonial-card">
+          <blockquote class="testimonial-card__quote">
+            "We needed a partner who could move fast without compromising quality.
+            From branding to digital execution, the team delivered a seamless
+            experience that helped us position Zapro as a modern AI-first brand.
+            Their strategic thinking and speed of execution exceeded our
+            expectations."
+          </blockquote>
+          <figcaption class="testimonial-card__author">
+            <div class="testimonial-card__avatar">
+              <img
+                src="https://www.figma.com/api/mcp/asset/b46b3bf2-d1d7-4ae0-a61c-da3218811a11"
+                alt="Sarah Mitchell"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <p class="testimonial-card__name">Sarah Mitchell</p>
+              <p class="testimonial-card__role">VP of Marketing, Zapro</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial-card">
+          <blockquote class="testimonial-card__quote">
+            "Sivaganesh brought a rare blend of design sensibility and strategic
+            thinking to our rebrand. The result was a visual identity that
+            resonated with our enterprise audience immediately. Every pixel was
+            intentional — truly exceptional work."
+          </blockquote>
+          <figcaption class="testimonial-card__author">
+            <div class="testimonial-card__avatar">
+              <img
+                src="https://www.figma.com/api/mcp/asset/b46b3bf2-d1d7-4ae0-a61c-da3218811a11"
+                alt="James Chen"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <p class="testimonial-card__name">James Chen</p>
+              <p class="testimonial-card__role">CEO, Kissflow</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial-card">
+          <blockquote class="testimonial-card__quote">
+            "What impressed me most was the ability to deeply understand our brand
+            and translate it into a digital language that felt both modern and
+            authentic. The website we built together became a key pillar in our
+            GTM strategy."
+          </blockquote>
+          <figcaption class="testimonial-card__author">
+            <div class="testimonial-card__avatar">
+              <img
+                src="https://www.figma.com/api/mcp/asset/b46b3bf2-d1d7-4ae0-a61c-da3218811a11"
+                alt="Rania Al-Hassan"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <p class="testimonial-card__name">Rania Al-Hassan</p>
+              <p class="testimonial-card__role">CMO, Jisr</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial-card">
+          <blockquote class="testimonial-card__quote">
+            "Working with Siva was one of the best design collaborations I've had.
+            He has an exceptional eye for composition, a deep understanding of user
+            behavior, and a genuine passion for craft. I'd highly recommend him to
+            any team serious about design."
+          </blockquote>
+          <figcaption class="testimonial-card__author">
+            <div class="testimonial-card__avatar">
+              <img
+                src="https://www.figma.com/api/mcp/asset/b46b3bf2-d1d7-4ae0-a61c-da3218811a11"
+                alt="Alex Rivera"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <p class="testimonial-card__name">Alex Rivera</p>
+              <p class="testimonial-card__role">Head of Design, ADPList</p>
+            </div>
+          </figcaption>
+        </figure>
+
+      </div>
+
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         CONTACT
+    ───────────────────────────────────────────────── -->
+    <section class="section contact" id="contact" aria-label="Contact">
+
+      <div class="section-label" data-reveal>
+        <img
+          class="section-label__dot"
+          src="https://www.figma.com/api/mcp/asset/1abaefea-3210-45ac-92ef-a3c1a57e849b"
+          alt=""
+          aria-hidden="true"
+        />
+        Contact
+      </div>
+
+      <div class="contact__card" data-reveal>
+        <div class="contact__inner">
+
+          <!-- Left: headline + quick links -->
+          <div class="contact__left">
+            <h2 class="contact__headline split-text">
+              Always open to discuss interesting ideas
+            </h2>
+            <div class="contact__links">
+              <p class="contact__links-title">Quick links</p>
+              <nav class="contact__links-nav" aria-label="Footer navigation">
+                <a href="#about"  class="contact__link">[01] About</a>
+                <a href="#works"  class="contact__link">[02] My works</a>
+                <a href="resume.pdf" class="contact__link" target="_blank" rel="noopener noreferrer">[03] Resume</a>
+                <a href="mailto:hello@sivaganesh.com" class="contact__link">[04] Mail</a>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Right: contact form -->
+          <div class="contact__form-wrap">
+            <p class="contact__form-title">
+              Feel free to share whatever is on your mind.
+            </p>
+            <form class="contact__form" id="contactForm" novalidate>
+              <div class="contact__row">
+                <input
+                  class="form-input"
+                  type="text"
+                  name="name"
+                  placeholder="Your good name *"
+                  required
+                  autocomplete="name"
+                />
+                <input
+                  class="form-input"
+                  type="email"
+                  name="email"
+                  placeholder="Mail *"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+              <input
+                class="form-input"
+                type="tel"
+                name="phone"
+                placeholder="Phone (optional)"
+                autocomplete="tel"
+              />
+              <textarea
+                class="form-input form-input--textarea"
+                name="message"
+                placeholder="Tell us about your project *"
+                required
+              ></textarea>
+              <button type="submit" class="btn--send">
+                <span>Send message</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main><!-- /page-wrapper -->
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
