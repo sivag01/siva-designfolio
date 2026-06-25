@@ -1,6 +1,5 @@
 /* =============================================================
    MAIN STYLES — SG Portfolio
-   All component styles. Uses tokens from ds.css.
    ============================================================= */
 
 /* -----------------------------------------------------------
@@ -18,7 +17,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-base);
   color: var(--clr-text-primary);
-  background: var(--clr-page-bg); /* fills beyond 1920px max-width */
+  background: var(--clr-page-bg);
   overflow-x: hidden;
 }
 
@@ -27,8 +26,27 @@ a   { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; }
 
 /* -----------------------------------------------------------
-   PAGE WRAPPER
-   1920px max, centered. Beyond 1920px → body #f5f5f5 shows.
+   MATERIAL SYMBOLS
+----------------------------------------------------------- */
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* -----------------------------------------------------------
+   PAGE WRAPPER — 1920px max, centered
 ----------------------------------------------------------- */
 .page-wrapper {
   width: 100%;
@@ -41,28 +59,27 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* -----------------------------------------------------------
-   SECTION BASE — white/colored cards on #f5f5f5 page bg
+   SECTION BASE
 ----------------------------------------------------------- */
 .section {
   background: var(--clr-white);
   padding: var(--section-pad);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-10);   /* 160px — exact Figma gap-[160px] */
+  gap: var(--sp-10);
   overflow: hidden;
 }
 
 /* -----------------------------------------------------------
-   SECTION LABEL
-   CSS diamond dot + label text — no image dependency
+   SECTION LABEL — CSS diamond dot
 ----------------------------------------------------------- */
 .section-label {
   display: inline-flex;
   align-items: center;
-  gap: var(--sp-2);          /* 12px — Figma gap-[12px] */
+  gap: 12px;
   font-family: var(--font-body);
   font-weight: var(--fw-regular);
-  font-size: var(--fs-md);   /* 20px */
+  font-size: var(--fs-md);
   line-height: var(--lh-normal);
   color: currentColor;
 }
@@ -77,88 +94,15 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* -----------------------------------------------------------
-   SCROLL REVEAL ANIMATIONS
-   JS adds .is-visible when element enters viewport.
-   .js class ensures graceful no-JS fallback.
------------------------------------------------------------ */
-
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(32px);
-  transition:
-    opacity   var(--dur-slow) var(--ease-out),
-    transform var(--dur-slow) var(--ease-out);
-}
-[data-reveal].is-visible { opacity: 1; transform: none; }
-
-[data-stagger] > * {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity   var(--dur-slow) var(--ease-out),
-    transform var(--dur-slow) var(--ease-out);
-}
-[data-stagger].is-visible > *:nth-child(1)  { opacity:1; transform:none; transition-delay: 0.00s; }
-[data-stagger].is-visible > *:nth-child(2)  { opacity:1; transform:none; transition-delay: 0.10s; }
-[data-stagger].is-visible > *:nth-child(3)  { opacity:1; transform:none; transition-delay: 0.20s; }
-[data-stagger].is-visible > *:nth-child(4)  { opacity:1; transform:none; transition-delay: 0.30s; }
-[data-stagger].is-visible > *:nth-child(5)  { opacity:1; transform:none; transition-delay: 0.40s; }
-[data-stagger].is-visible > *:nth-child(6)  { opacity:1; transform:none; transition-delay: 0.50s; }
-[data-stagger].is-visible > *:nth-child(n+7){ opacity:1; transform:none; transition-delay: 0.55s; }
-
-/* Word reveal — JS splits text into .word > .word-inner */
-.js .split-text .word {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
-  line-height: inherit;
-}
-.js .split-text .word-inner {
-  display: inline-block;
-  transform: translateY(115%);
-  transition: transform var(--dur-slower) var(--ease-out);
-}
-.js .split-text.is-visible .word-inner { transform: none; }
-
-.js .split-text.is-visible .word:nth-child(1)  .word-inner { transition-delay: 0.00s; }
-.js .split-text.is-visible .word:nth-child(2)  .word-inner { transition-delay: 0.04s; }
-.js .split-text.is-visible .word:nth-child(3)  .word-inner { transition-delay: 0.08s; }
-.js .split-text.is-visible .word:nth-child(4)  .word-inner { transition-delay: 0.12s; }
-.js .split-text.is-visible .word:nth-child(5)  .word-inner { transition-delay: 0.16s; }
-.js .split-text.is-visible .word:nth-child(6)  .word-inner { transition-delay: 0.20s; }
-.js .split-text.is-visible .word:nth-child(7)  .word-inner { transition-delay: 0.24s; }
-.js .split-text.is-visible .word:nth-child(8)  .word-inner { transition-delay: 0.28s; }
-.js .split-text.is-visible .word:nth-child(9)  .word-inner { transition-delay: 0.32s; }
-.js .split-text.is-visible .word:nth-child(10) .word-inner { transition-delay: 0.36s; }
-.js .split-text.is-visible .word:nth-child(n+11).word-inner{ transition-delay: 0.40s; }
-
-/* Letter reveal — hero name */
-.hero__name.js-split .char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(55%) rotate(4deg);
-  transition:
-    opacity   var(--dur-slow) var(--ease-out),
-    transform var(--dur-slow) var(--ease-out);
-}
-.hero__name.is-visible .char { opacity: 1; transform: none; }
-.hero__name.is-visible .char:nth-child(1)  { transition-delay: 0.00s; }
-.hero__name.is-visible .char:nth-child(2)  { transition-delay: 0.05s; }
-.hero__name.is-visible .char:nth-child(3)  { transition-delay: 0.10s; }
-.hero__name.is-visible .char:nth-child(4)  { transition-delay: 0.15s; }
-.hero__name.is-visible .char:nth-child(5)  { transition-delay: 0.20s; }
-.hero__name.is-visible .char:nth-child(6)  { transition-delay: 0.25s; }
-.hero__name.is-visible .char:nth-child(7)  { transition-delay: 0.30s; }
-.hero__name.is-visible .char:nth-child(8)  { transition-delay: 0.35s; }
-.hero__name.is-visible .char:nth-child(9)  { transition-delay: 0.40s; }
-.hero__name.is-visible .char:nth-child(10) { transition-delay: 0.45s; }
-
-/* -----------------------------------------------------------
    NAVBAR
+   Figma: sits over hero image, pl-24 pr-12 py-12
+   position:fixed keeps it visible on scroll.
+   No background — matches the transparent design overlay.
 ----------------------------------------------------------- */
 .navbar {
   position: fixed;
-  top: 0; left: 50%; right: auto;
+  top: 0;
+  left: 50%;
   transform: translateX(-50%);
   width: 100%;
   max-width: var(--max-w);
@@ -166,45 +110,33 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px var(--page-pad);         /* Figma: py-[12px] pl-[24px] pr-[12px] */
-  transition:
-    background       var(--dur-base) var(--ease-out),
-    box-shadow       var(--dur-base) var(--ease-out),
-    backdrop-filter  var(--dur-base) var(--ease-out);
-}
-
-.navbar.is-scrolled {
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+  padding: 12px 12px 12px 24px;
 }
 
 .navbar__logo {
   font-family: var(--font-mono);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-base);             /* 16px */
+  font-size: var(--fs-base);
   line-height: var(--lh-snug);
   letter-spacing: 0.04em;
   color: var(--clr-black);
 }
 
+/* Figma: bg-white px-24 py-16 Inter Medium 16px */
 .btn--nav {
   background: var(--clr-white);
   color: var(--clr-black);
   font-family: var(--font-body);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-base);             /* 16px */
+  font-size: var(--fs-base);
   line-height: var(--lh-snug);
-  padding: 1rem var(--sp-4);             /* Figma: py-[16px] px-[24px] */
+  padding: 16px 24px;
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  transition: background var(--dur-base) var(--ease-out);
 }
-.btn--nav:hover { background: var(--clr-page-bg); }
 
 /* -----------------------------------------------------------
    BUTTONS
@@ -215,80 +147,43 @@ button { font-family: inherit; cursor: pointer; }
   gap: var(--sp-2);
   font-family: var(--font-body);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-md);              /* 20px */
+  font-size: var(--fs-md);
   line-height: var(--lh-normal);
-  padding: var(--sp-4) var(--sp-6);    /* Figma: py-[24px] px-[40px] */
+  padding: var(--sp-4) var(--sp-6);
   white-space: nowrap;
   border: none;
   outline: none;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition:
-    background   var(--dur-base) var(--ease-out),
-    color        var(--dur-base) var(--ease-out),
-    border-color var(--dur-base) var(--ease-out),
-    transform    var(--dur-fast) var(--ease-out);
 }
-.btn:active { transform: scale(0.98); }
 
-/* Shimmer sweep on hover */
-.btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
-  transform: translateX(-100%);
-  transition: transform 0.5s var(--ease-out);
-  pointer-events: none;
-}
-.btn:hover::before { transform: translateX(100%); }
-
+/* Figma: bg-black text-white px-40 py-24 */
 .btn--dark {
   background: var(--clr-black);
   color: var(--clr-white);
 }
-.btn--dark:hover { background: #1a1a1a; }
 
-/* "To know more" — Figma: border-[#ccc] w-[600px] px-[40px] py-[24px] */
+/* Figma: bg-white border-[#ccc] px-40 py-24 justify-between w-600 */
 .btn--outline {
   background: var(--clr-white);
   color: var(--clr-black);
   border: 1px solid var(--clr-border-mid);
   justify-content: space-between;
-  width: clamp(280px, 37.8%, 600px);   /* Figma: w-[600px] out of 1584px ≈ 37.8% */
+  width: clamp(280px, 37.8%, 600px);
 }
-.btn--outline:hover {
-  background: var(--clr-black);
-  color: var(--clr-white);
-  border-color: var(--clr-black);
-}
-
-.btn__icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  transition: transform var(--dur-base) var(--ease-out), filter var(--dur-base);
-}
-.btn--dark:hover    .btn__icon { transform: translate(2px, -2px); }
-.btn--outline:hover .btn__icon { filter: invert(1); transform: translateX(3px); }
 
 /* -----------------------------------------------------------
-   HERO SECTION
-   No padding on the section itself — image bleeds full width,
-   content padded inside hero__content.
+   HERO
 ----------------------------------------------------------- */
 .hero {
   padding: 0;
   gap: 0;
-  overflow: hidden;
   position: relative;
 }
 
-/* Hero image — aspect-ratio locked, changes per breakpoint via ds.css */
+/* Aspect-ratio locked — 4/1 desktop, 2/1 tablet, 3/2 mobile */
 .hero__image-wrap {
   width: 100%;
-  aspect-ratio: var(--ratio-hero);     /* 4/1 desktop → 2/1 tablet → 3/2 mobile */
+  aspect-ratio: var(--ratio-hero);
   overflow: hidden;
   position: relative;
 }
@@ -297,25 +192,23 @@ button { font-family: inherit; cursor: pointer; }
   position: absolute;
   inset: 0;
   width: 100%;
-  height: 110%;             /* extra for parallax travel */
+  height: 100%;
   object-fit: cover;
   object-position: center center;
-  will-change: transform;
 }
 
-/* Content below image */
 .hero__content {
   padding: var(--section-pad);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-10);        /* 160px — Figma gap-[160px] */
+  gap: var(--sp-10);
 }
 
-/* SIVAGANESH — font-size set by JS scaleToFitWidth */
+/* Font-size set by JS scaleToFitWidth */
 .hero__name {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: 1px;           /* overridden by JS */
+  font-size: 1px;
   line-height: var(--lh-tightest);
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -323,10 +216,9 @@ button { font-family: inherit; cursor: pointer; }
   white-space: nowrap;
   display: block;
   width: 100%;
-  overflow: hidden;
 }
 
-/* Bio + Download row — Figma: justify-between, bio w-[600px], btn w-[600px] */
+/* Figma: justify-between, bio w-600, btn w-600 */
 .hero__meta {
   display: flex;
   align-items: center;
@@ -335,27 +227,22 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .hero__bio {
-  font-size: var(--fs-md);             /* 20px */
+  font-size: var(--fs-md);
   font-weight: var(--fw-regular);
   line-height: var(--lh-normal);
-  color: var(--clr-text-secondary);   /* #666 */
+  color: var(--clr-text-secondary);
   flex: 0 0 calc(50% - var(--sp-3));
   max-width: 600px;
 }
 
 @media (max-width: 900px) {
-  .hero__meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--sp-4);
-  }
-  .hero__bio { flex: none; max-width: 100%; }
+  .hero__meta { flex-direction: column; align-items: flex-start; gap: var(--sp-4); }
+  .hero__bio  { flex: none; max-width: 100%; }
   .btn--dark  { width: 100%; justify-content: space-between; }
 }
 
 /* -----------------------------------------------------------
-   COMPANIES SECTION
-   Figma: 2 rows × 5 logos, aspect-ratio 1216/480, gap-[8px]
+   COMPANIES — 2 rows × 5 logos, aspect-ratio 1216/480
 ----------------------------------------------------------- */
 .companies__grid {
   display: flex;
@@ -370,7 +257,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .companies__item {
-  aspect-ratio: var(--ratio-company);  /* 1216/480 — exact Figma */
+  aspect-ratio: var(--ratio-company);
   overflow: hidden;
   position: relative;
   background: var(--clr-page-bg);
@@ -382,30 +269,22 @@ button { font-family: inherit; cursor: pointer; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--dur-slow) var(--ease-out);
 }
 
-.companies__item:hover img { transform: scale(1.05); }
-
-@media (max-width: 768px) {
-  .companies__row { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 480px) {
-  .companies__row { grid-template-columns: repeat(2, 1fr); }
-}
+@media (max-width: 768px) { .companies__row { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .companies__row { grid-template-columns: repeat(2, 1fr); } }
 
 /* -----------------------------------------------------------
-   ABOUT / INTRO SECTION
-   Figma: text-[72px] font-semibold leading-[0.8]
-   with ~11-space indent via whitespace-pre-wrap
+   ABOUT
 ----------------------------------------------------------- */
+/* Figma: text-72 font-semibold leading-0.8, whitespace-pre-wrap with indent */
 .about__quote {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-3xl);            /* 72px */
-  line-height: var(--lh-tightest);     /* 0.8 */
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-tightest);
   color: var(--clr-black);
-  text-indent: 8ch;                    /* matches Figma's leading whitespace indent */
+  white-space: pre-wrap;
 }
 
 .about__cta {
@@ -414,22 +293,20 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 @media (max-width: 768px) {
-  .about__quote { text-indent: 0; }
+  .about__quote { white-space: normal; }
 }
 
 /* -----------------------------------------------------------
-   AREAS SECTION
-   Figma: 3 equal columns, each h-[680px], gap-[24px]
-   Aspect ratio 3/4 — portrait cards
+   AREAS — 3 columns, aspect-ratio 3/4 (portrait)
 ----------------------------------------------------------- */
 .areas__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--section-pad);             /* 24px */
+  gap: var(--section-pad);
 }
 
 .area-card {
-  aspect-ratio: var(--ratio-area);     /* 3/4 desktop, 16/9 mobile via ds.css */
+  aspect-ratio: var(--ratio-area);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -452,12 +329,7 @@ button { font-family: inherit; cursor: pointer; }
   height: 100%;
   object-fit: cover;
   opacity: 0.8;
-  transition:
-    transform var(--dur-slower) var(--ease-out),
-    opacity   var(--dur-base)   var(--ease-out);
 }
-
-.area-card:hover .area-card__bg img { transform: scale(1.06); opacity: 0.65; }
 
 .area-card__num,
 .area-card__title {
@@ -465,44 +337,37 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 1;
   font-family: var(--font-body);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-lg);             /* 24px */
+  font-size: var(--fs-lg);
   line-height: var(--lh-normal);
   color: var(--clr-white);
 }
-.area-card__title {
-  text-align: right;
-  transition: letter-spacing var(--dur-base) var(--ease-out);
-}
-.area-card:hover .area-card__title { letter-spacing: 0.04em; }
 
-@media (max-width: 900px) {
-  .areas__grid { grid-template-columns: 1fr; }
-}
+.area-card__title { text-align: right; }
+
+@media (max-width: 900px) { .areas__grid { grid-template-columns: 1fr; } }
 
 /* -----------------------------------------------------------
-   SUCCESS STORIES SECTION
-   Figma: card p-[40px], image w-[800px] h-[600px],
-   gap-[80px] between image and info, gap-[24px] between cards
+   SUCCESS STORIES
+   Figma: card p-40, image w-800 h-600 (4:3), gap-80
 ----------------------------------------------------------- */
 .stories__list {
   display: flex;
   flex-direction: column;
-  gap: var(--section-pad);             /* 24px */
+  gap: var(--section-pad);
 }
 
 .story-card {
   background: var(--clr-page-bg);
-  padding: var(--sp-6);                /* 40px — Figma p-[40px] */
+  padding: var(--sp-6);
   display: grid;
   grid-template-columns: minmax(0, 800px) 1fr;
-  gap: var(--sp-8);                    /* 80px — Figma gap-[80px] */
+  gap: var(--sp-8);
   align-items: stretch;
 }
 
-/* Image — aspect-ratio: 4/3 → at max 800px width → 600px tall */
 .story-card__image-wrap {
   position: relative;
-  aspect-ratio: var(--ratio-story);    /* 4/3 desktop, 16/9 mobile via ds.css */
+  aspect-ratio: var(--ratio-story);
   overflow: hidden;
   align-self: start;
 }
@@ -513,38 +378,27 @@ button { font-family: inherit; cursor: pointer; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--dur-slower) var(--ease-out);
 }
 
-.story-card:hover .story-card__image-wrap img { transform: scale(1.04); }
-
-/* "View case study" button — bottom-right of image */
+/* Figma: absolute bottom-right, bg-white px-40 py-20 */
 .story-card__view {
   position: absolute;
   bottom: 0; right: 0;
   background: var(--clr-white);
-  padding: 1.25rem var(--sp-6);        /* Figma: py-[20px] px-[40px] */
+  padding: 20px 40px;
   display: flex;
   align-items: center;
   gap: var(--sp-2);
   font-family: var(--font-body);
-  font-size: var(--fs-base);           /* 16px */
+  font-size: var(--fs-base);
   font-weight: var(--fw-medium);
   line-height: var(--lh-snug);
   color: var(--clr-black);
   cursor: pointer;
-  transition:
-    background var(--dur-base) var(--ease-out),
-    color      var(--dur-base) var(--ease-out);
 }
-.story-card__view:hover { background: var(--clr-black); color: var(--clr-white); }
-.story-card__view img {
-  width: 16px; height: 16px; flex-shrink: 0;
-  transition: filter var(--dur-base), transform var(--dur-base) var(--ease-out);
-}
-.story-card__view:hover img { filter: invert(1); transform: translate(2px, -2px); }
 
-/* Info column — stretches to match image height */
+.story-card__view .material-symbols-rounded { font-size: 16px; }
+
 .story-card__info {
   display: flex;
   flex-direction: column;
@@ -555,88 +409,78 @@ button { font-family: inherit; cursor: pointer; }
 .story-card__top {
   display: flex;
   flex-direction: column;
-  gap: var(--section-pad);             /* 24px */
+  gap: var(--section-pad);
 }
 
+/* Figma: bg-white rounded-4 py-8 px-12 */
 .story-card__logo {
   display: inline-flex;
   align-items: center;
   background: var(--clr-white);
   border-radius: var(--radius-sm);
-  padding: var(--sp-1) var(--sp-2);    /* Figma: py-[8px] px-[12px] */
+  padding: 8px 12px;
   align-self: flex-start;
 }
+
 .story-card__logo img {
   height: 24px;
   width: 100px;
   object-fit: contain;
 }
 
-/* Figma: text-[56px] font-semibold leading-[0.8] */
+/* Figma: text-56 font-semibold leading-0.8 lowercase */
 .story-card__title {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-2xl);            /* 56px */
-  line-height: var(--lh-tightest);     /* 0.8 */
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-tightest);
   color: var(--clr-black);
   text-transform: lowercase;
 }
 
-/* Metrics — Figma: gap-[32px] between items */
+/* Figma: gap-32 between metrics */
 .story-card__metrics {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-5);                    /* 32px */
+  gap: var(--sp-5);
 }
 
 .metric {
   border-top: 1px solid var(--clr-border);
-  padding-top: var(--sp-3);           /* 16px */
+  padding-top: var(--sp-3);
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-/* Figma: text-[40px] font-semibold leading-[1.2] uppercase */
+/* Figma: text-40 font-semibold uppercase */
 .metric__value {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-xl);            /* 40px */
+  font-size: var(--fs-xl);
   line-height: var(--lh-snug);
   color: var(--clr-black);
   text-transform: uppercase;
   display: block;
-  font-variant-numeric: tabular-nums;
 }
 
 .metric__label {
   font-size: var(--fs-base);
   font-weight: var(--fw-regular);
-  color: var(--clr-text-muted);       /* #7a7a7a */
+  color: var(--clr-text-muted);
 }
 
 @media (max-width: 1100px) {
-  .story-card {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-4);
-  }
+  .story-card { grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
 }
-
 @media (max-width: 768px) {
-  .story-card {
-    grid-template-columns: 1fr;
-    padding: var(--sp-4);
-    gap: var(--sp-4);
-  }
+  .story-card { grid-template-columns: 1fr; padding: var(--sp-4); gap: var(--sp-4); }
   .story-card__image-wrap { align-self: auto; }
-  .story-card__info { gap: var(--sp-4); }
-  .story-card__view { padding: 0.875rem var(--sp-4); }
+  .story-card__view { padding: 14px var(--sp-4); }
 }
 
 /* -----------------------------------------------------------
-   TESTIMONIALS SECTION
-   Figma: bg-[#ab7149], 2×2 grid, gap-[16px],
-   cards p-[40px] bg-[#faf5f1]
+   TESTIMONIALS — bg-[#ab7149], 2×2 grid
 ----------------------------------------------------------- */
 .testimonials {
   background: var(--clr-warm);
@@ -646,25 +490,24 @@ button { font-family: inherit; cursor: pointer; }
 .testimonials__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--sp-3);                    /* 16px — Figma gap-[16px] */
+  gap: 16px;
 }
 
+/* Figma: bg-[#faf5f1] p-40 gap-64 */
 .testimonial-card {
   background: var(--clr-warm-light);
-  padding: var(--sp-6);                /* 40px */
+  padding: var(--sp-6);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: var(--sp-7);                    /* 64px — Figma gap-[64px] */
-  transition: transform var(--dur-base) var(--ease-out);
+  gap: var(--sp-7);
 }
-.testimonial-card:hover { transform: translateY(-4px); }
 
-/* Figma: font-medium italic text-[24px] leading-[1.4] */
+/* Figma: font-medium italic text-24 leading-1.4 */
 .testimonial-card__quote {
   font-style: italic;
   font-weight: var(--fw-medium);
-  font-size: var(--fs-lg);            /* 24px */
+  font-size: var(--fs-lg);
   line-height: var(--lh-normal);
   color: var(--clr-black);
 }
@@ -672,7 +515,7 @@ button { font-family: inherit; cursor: pointer; }
 .testimonial-card__author {
   display: flex;
   align-items: center;
-  gap: var(--sp-3);                   /* 16px */
+  gap: var(--sp-3);
 }
 
 .testimonial-card__avatar {
@@ -684,20 +527,16 @@ button { font-family: inherit; cursor: pointer; }
   flex-shrink: 0;
   background: var(--clr-border);
 }
-.testimonial-card__avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
-/* Figma: font-semibold text-[20px] */
+.testimonial-card__avatar img { width: 100%; height: 100%; object-fit: cover; }
+
 .testimonial-card__name {
   font-weight: var(--fw-semibold);
   font-size: var(--fs-md);
   line-height: var(--lh-normal);
   color: var(--clr-black);
 }
-/* Figma: font-medium text-[14px] */
+
 .testimonial-card__role {
   font-weight: var(--fw-medium);
   font-size: var(--fs-sm);
@@ -713,25 +552,24 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* -----------------------------------------------------------
-   CONTACT / FOOTER SECTION
-   Figma: bg-black, card bg-[#1a1a1a] p-[40px],
-   inner gap-[120px], right col w-[680px]
+   CONTACT — bg-black
 ----------------------------------------------------------- */
 .contact {
   background: var(--clr-black);
   gap: var(--sp-10);
 }
 
+/* Figma: bg-[#1a1a1a] p-40 */
 .contact__card {
   background: var(--clr-dark);
-  padding: var(--sp-6);               /* 40px */
+  padding: var(--sp-6);
 }
 
-/* Figma: flex gap-[120px] — left: 1fr, right: 680px */
+/* Figma: flex gap-120, left 1fr, right w-680 */
 .contact__inner {
   display: grid;
   grid-template-columns: 1fr minmax(0, 680px);
-  gap: var(--sp-9);                   /* 120px */
+  gap: var(--sp-9);
   align-items: start;
 }
 
@@ -743,22 +581,21 @@ button { font-family: inherit; cursor: pointer; }
   gap: var(--sp-10);
 }
 
-/* Figma: text-[104px] font-semibold leading-[0.8] */
+/* Figma: text-104 font-semibold leading-0.8 */
 .contact__headline {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-4xl);           /* 104px */
-  line-height: var(--lh-tightest);    /* 0.8 */
+  font-size: var(--fs-4xl);
+  line-height: var(--lh-tightest);
   color: var(--clr-white);
 }
 
 .contact__links {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-7);                   /* 64px — Figma gap-[64px] */
+  gap: var(--sp-7);
 }
 
-/* Figma: font-semibold text-[24px] */
 .contact__links-title {
   font-weight: var(--fw-semibold);
   font-size: var(--fs-lg);
@@ -766,38 +603,25 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--clr-white);
 }
 
-/* Figma: gap-[80px] between items, text-[20px] color-[#cdcdcd] */
+/* Figma: gap-80, text-20, color-[#cdcdcd] */
 .contact__links-nav {
   display: flex;
-  gap: var(--sp-8);                   /* 80px */
+  gap: var(--sp-8);
   flex-wrap: wrap;
 }
 
 .contact__link {
   font-size: var(--fs-md);
   color: var(--clr-text-dim);
-  position: relative;
-  transition: color var(--dur-base) var(--ease-out);
 }
-.contact__link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px; left: 0;
-  width: 0; height: 1px;
-  background: var(--clr-white);
-  transition: width var(--dur-base) var(--ease-out);
-}
-.contact__link:hover { color: var(--clr-white); }
-.contact__link:hover::after { width: 100%; }
 
-/* Form wrapper — Figma: gap-[80px] between title and form */
 .contact__form-wrap {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-8);                   /* 80px */
+  gap: var(--sp-8);
 }
 
-/* Figma: font-semibold text-[24px] leading-[1.5] */
+/* Figma: font-semibold text-24 leading-1.5 */
 .contact__form-title {
   font-weight: var(--fw-semibold);
   font-size: var(--fs-lg);
@@ -805,21 +629,19 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--clr-white);
 }
 
-/* Figma: gap-[24px] between fields */
 .contact__form {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-4);                   /* 24px */
+  gap: var(--sp-4);
 }
 
-/* Figma: gap-[16px] between name and email */
 .contact__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--sp-3);                   /* 16px */
+  gap: var(--sp-3);
 }
 
-/* Figma: bg-black border-[#525252] rounded-[4px] p-[24px] text-[16px] */
+/* Figma: bg-black border-[#525252] rounded-4 p-24 text-16 */
 .form-input {
   background: var(--clr-black);
   border: 1px solid var(--clr-border-dark);
@@ -833,68 +655,37 @@ button { font-family: inherit; cursor: pointer; }
   width: 100%;
   outline: none;
   appearance: none;
-  transition:
-    border-color var(--dur-base) var(--ease-out),
-    box-shadow   var(--dur-base) var(--ease-out);
 }
+
 .form-input::placeholder { color: rgba(255,255,255,0.35); }
-.form-input:focus {
-  border-color: rgba(255,255,255,0.55);
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
-}
+.form-input:focus { border-color: rgba(255,255,255,0.55); }
 
-/* Figma: h-[240px] */
-.form-input--textarea {
-  height: 240px;
-  resize: vertical;
-  vertical-align: top;
-  min-height: 120px;
-}
+/* Figma: h-240 */
+.form-input--textarea { height: 240px; resize: vertical; vertical-align: top; min-height: 120px; }
 
-/* Figma: bg-white text-[24px] px-[32px] py-[16px] */
+/* Figma: bg-white text-24 px-32 py-16 */
 .btn--send {
   align-self: flex-start;
   background: var(--clr-white);
   color: var(--clr-black);
-  padding: 1rem var(--sp-5);           /* 16px 32px */
+  padding: 16px 32px;
   font-family: var(--font-body);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-lg);             /* 24px */
+  font-size: var(--fs-lg);
   line-height: var(--lh-snug);
   border: none;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition:
-    color     var(--dur-base) var(--ease-out),
-    transform var(--dur-fast) var(--ease-out);
 }
-.btn--send::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--clr-black);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform var(--dur-base) var(--ease-out);
-  z-index: 0;
-}
-.btn--send:hover::before { transform: scaleY(1); }
-.btn--send span { position: relative; z-index: 1; }
-.btn--send:hover { color: var(--clr-white); }
-.btn--send:active { transform: scale(0.98); }
+
 .btn--send:disabled { opacity: 0.55; cursor: not-allowed; }
 
 @media (max-width: 1200px) {
-  .contact__inner {
-    grid-template-columns: 1fr;
-    gap: var(--sp-8);
-  }
-  .contact__left { align-self: auto; }
+  .contact__inner { grid-template-columns: 1fr; gap: var(--sp-8); }
+  .contact__left  { align-self: auto; }
 }
 
 @media (max-width: 480px) {
-  .contact__row  { grid-template-columns: 1fr; }
-  .btn--send     { width: 100%; justify-content: center; }
+  .contact__row       { grid-template-columns: 1fr; }
+  .btn--send          { width: 100%; justify-content: center; }
   .contact__links-nav { gap: var(--sp-4); }
 }

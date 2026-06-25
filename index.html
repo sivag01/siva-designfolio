@@ -6,7 +6,6 @@
   <meta name="description" content="Sivaganesh — Designer with 5+ years crafting marketing, branding, web & B2B software experiences." />
   <meta name="author" content="Sivaganesh" />
 
-  <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:title"       content="Sivaganesh — Designer" />
   <meta property="og:description" content="5+ years designing for marketing, branding, web & B2B software." />
@@ -14,40 +13,30 @@
 
   <title>Sivaganesh — Designer</title>
 
-  <!-- Preconnect for fast font load -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,0,0&display=swap"
     rel="stylesheet"
   />
 
-  <!-- Design System (tokens first) -->
   <link rel="stylesheet" href="assets/css/ds.css" />
-  <!-- Component styles -->
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════════════════
-       NAVBAR
-  ═══════════════════════════════════════════════════════ -->
+  <!-- NAVBAR -->
   <nav class="navbar" id="navbar" aria-label="Primary navigation">
-    <span class="navbar__logo" aria-label="Sivaganesh — Home">SG</span>
+    <span class="navbar__logo">SG</span>
     <a href="#works" class="btn btn--nav">See my works</a>
   </nav>
 
-  <!-- ═══════════════════════════════════════════════════════
-       PAGE WRAPPER  (1920px max — #f5f5f5 bg fills beyond)
-  ═══════════════════════════════════════════════════════ -->
+  <!-- PAGE WRAPPER -->
   <main class="page-wrapper">
 
-    <!-- ─────────────────────────────────────────────────
-         HERO
-    ───────────────────────────────────────────────── -->
+    <!-- HERO -->
     <section class="section hero" aria-label="Hero">
-
-      <!-- Banner — aspect-ratio locked (4:1 → 2:1 → 3:2) via ds.css -->
       <div class="hero__image-wrap">
         <img
           class="hero__image"
@@ -57,40 +46,28 @@
           fetchpriority="high"
         />
       </div>
-
-      <!-- Name + bio + download -->
       <div class="hero__content">
         <h1 class="hero__name" aria-label="Sivaganesh">SIVAGANESH</h1>
-
         <div class="hero__meta">
-          <p class="hero__bio" data-reveal>
+          <p class="hero__bio">
             5+ years of experience in creating meaningful designs that assist
             marketers to step forward to their goal.
           </p>
-          <a href="resume.pdf" class="btn btn--dark" data-reveal download>
+          <a href="resume.pdf" class="btn btn--dark" download>
             Download resume
-            <img
-              class="btn__icon"
-              src="https://www.figma.com/api/mcp/asset/23c843e7-381f-4868-8826-00f915aaeb00"
-              alt=""
-              aria-hidden="true"
-            />
+            <span class="material-symbols-rounded" aria-hidden="true">download</span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ─────────────────────────────────────────────────
-         COMPANIES
-    ───────────────────────────────────────────────── -->
+    <!-- COMPANIES -->
     <section class="section companies" id="companies" aria-label="Companies">
-
-      <div class="section-label" data-reveal>
+      <div class="section-label">
         <span class="section-label__dot" aria-hidden="true"></span>
         Companies I have worked with
       </div>
-
-      <div class="companies__grid" data-stagger>
+      <div class="companies__grid">
         <div class="companies__row">
           <div class="companies__item">
             <img src="https://www.figma.com/api/mcp/asset/355be262-265b-4014-8e2a-ffa5a5ec3ea6" alt="Facilio" loading="lazy" />
@@ -126,285 +103,196 @@
           </div>
         </div>
       </div>
-
     </section>
 
-    <!-- ─────────────────────────────────────────────────
-         ABOUT
-    ───────────────────────────────────────────────── -->
+    <!-- ABOUT -->
     <section class="section about" id="about" aria-label="About">
-
-      <div class="section-label" data-reveal>
+      <div class="section-label">
         <span class="section-label__dot" aria-hidden="true"></span>
         Quick intro about myself
       </div>
-
-      <p class="about__quote split-text">
-        Since 2020, I've been designing for marketing, branding, web, B2B
+      <p class="about__quote">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Since 2020, I've been designing for marketing, branding, web, B2B
         Software. I love everything that has to do with design and consumer
         technology.
       </p>
-
-      <div class="about__cta" data-reveal>
+      <div class="about__cta">
         <a href="#contact" class="btn btn--outline">
           To know more about me
-          <img
-            class="btn__icon"
-            src="https://www.figma.com/api/mcp/asset/d5546085-dbec-45b5-ac72-50f7da6eaafe"
-            alt=""
-            aria-hidden="true"
-          />
+          <span class="material-symbols-rounded" aria-hidden="true">east</span>
         </a>
       </div>
-
     </section>
 
-    <!-- ─────────────────────────────────────────────────
-         AREAS
-    ───────────────────────────────────────────────── -->
+    <!-- AREAS -->
     <section class="section areas" id="works" aria-label="Areas of expertise">
-
-      <div class="section-label" data-reveal>
+      <div class="section-label">
         <span class="section-label__dot" aria-hidden="true"></span>
         Areas I have stepped in
       </div>
-
-      <div class="areas__grid" data-stagger>
-
+      <div class="areas__grid">
         <article class="area-card">
           <div class="area-card__bg" aria-hidden="true">
-            <img
-              src="https://www.figma.com/api/mcp/asset/49b47db8-9324-4030-b94a-5bbde1906397"
-              alt=""
-              loading="lazy"
-            />
+            <img src="https://www.figma.com/api/mcp/asset/49b47db8-9324-4030-b94a-5bbde1906397" alt="" loading="lazy" />
           </div>
           <span class="area-card__num">01</span>
           <span class="area-card__title">Visual design</span>
         </article>
-
         <article class="area-card">
           <div class="area-card__bg" aria-hidden="true">
-            <img
-              src="https://www.figma.com/api/mcp/asset/49b47db8-9324-4030-b94a-5bbde1906397"
-              alt=""
-              loading="lazy"
-            />
+            <img src="https://www.figma.com/api/mcp/asset/49b47db8-9324-4030-b94a-5bbde1906397" alt="" loading="lazy" />
           </div>
           <span class="area-card__num">02</span>
           <span class="area-card__title">Development</span>
         </article>
-
         <article class="area-card">
           <div class="area-card__bg" aria-hidden="true">
-            <img
-              src="https://www.figma.com/api/mcp/asset/49b47db8-9324-4030-b94a-5bbde1906397"
-              alt=""
-              loading="lazy"
-            />
+            <img src="https://www.figma.com/api/mcp/asset/49b47db8-9324-4030-b94a-5bbde1906397" alt="" loading="lazy" />
           </div>
           <span class="area-card__num">03</span>
           <span class="area-card__title">Marketing</span>
         </article>
-
       </div>
-
     </section>
 
-    <!-- ─────────────────────────────────────────────────
-         SUCCESS STORIES
-    ───────────────────────────────────────────────── -->
+    <!-- SUCCESS STORIES -->
     <section class="section stories" aria-label="Success stories">
-
-      <div class="section-label" data-reveal>
+      <div class="section-label">
         <span class="section-label__dot" aria-hidden="true"></span>
         Success story
       </div>
-
       <div class="stories__list">
 
-        <!-- Story 1 — Zapro -->
-        <article class="story-card" data-reveal>
+        <article class="story-card">
           <div class="story-card__image-wrap">
-            <img
-              src="https://www.figma.com/api/mcp/asset/90dfdb65-eb46-4bb4-9094-245bd76307f3"
-              alt="Zapro — AI procurement platform"
-              loading="lazy"
-            />
+            <img src="https://www.figma.com/api/mcp/asset/90dfdb65-eb46-4bb4-9094-245bd76307f3" alt="Zapro — AI procurement platform" loading="lazy" />
             <a href="#" class="story-card__view" aria-label="View Zapro case study">
               View case study
-              <img
-                src="https://www.figma.com/api/mcp/asset/e9a2d2c6-6189-4f9e-aa8c-8e97748a7aac"
-                alt=""
-                aria-hidden="true"
-              />
+              <span class="material-symbols-rounded" aria-hidden="true">call_made</span>
             </a>
           </div>
           <div class="story-card__info">
             <div class="story-card__top">
               <div class="story-card__logo">
-                <img
-                  src="https://www.figma.com/api/mcp/asset/b5279079-9302-45c2-9a3a-a4ec48f802f7"
-                  alt="Zapro"
-                  loading="lazy"
-                />
+                <img src="https://www.figma.com/api/mcp/asset/b5279079-9302-45c2-9a3a-a4ec48f802f7" alt="Zapro" loading="lazy" />
               </div>
-              <h3 class="story-card__title split-text">
+              <h3 class="story-card__title">
                 AI-first procurement platform for modern businesses
               </h3>
             </div>
-            <div class="story-card__metrics" data-stagger>
+            <div class="story-card__metrics">
               <div class="metric">
-                <span class="metric__value" data-count="70" data-suffix="%">70%</span>
+                <span class="metric__value">70%</span>
                 <span class="metric__label">Faster Project Delivery</span>
               </div>
               <div class="metric">
-                <span class="metric__value" data-count="500" data-suffix="+">500+</span>
+                <span class="metric__value">500+</span>
                 <span class="metric__label">Projects Delivered</span>
               </div>
               <div class="metric">
-                <span class="metric__value" data-count="98" data-suffix="%">98%</span>
+                <span class="metric__value">98%</span>
                 <span class="metric__label">Client Satisfaction</span>
               </div>
             </div>
           </div>
         </article>
 
-        <!-- Story 2 — Kissflow -->
-        <article class="story-card" data-reveal>
+        <article class="story-card">
           <div class="story-card__image-wrap">
-            <img
-              src="https://www.figma.com/api/mcp/asset/90dfdb65-eb46-4bb4-9094-245bd76307f3"
-              alt="Kissflow — workflow automation"
-              loading="lazy"
-            />
+            <img src="https://www.figma.com/api/mcp/asset/90dfdb65-eb46-4bb4-9094-245bd76307f3" alt="Kissflow — workflow automation" loading="lazy" />
             <a href="#" class="story-card__view" aria-label="View Kissflow case study">
               View case study
-              <img
-                src="https://www.figma.com/api/mcp/asset/e9a2d2c6-6189-4f9e-aa8c-8e97748a7aac"
-                alt=""
-                aria-hidden="true"
-              />
+              <span class="material-symbols-rounded" aria-hidden="true">call_made</span>
             </a>
           </div>
           <div class="story-card__info">
             <div class="story-card__top">
               <div class="story-card__logo">
-                <img
-                  src="https://www.figma.com/api/mcp/asset/3a2c3099-c906-4dde-8e49-982d78ce152b"
-                  alt="Kissflow"
-                  loading="lazy"
-                />
+                <img src="https://www.figma.com/api/mcp/asset/3a2c3099-c906-4dde-8e49-982d78ce152b" alt="Kissflow" loading="lazy" />
               </div>
-              <h3 class="story-card__title split-text">
+              <h3 class="story-card__title">
                 No-code workflow automation for enterprises at scale
               </h3>
             </div>
-            <div class="story-card__metrics" data-stagger>
+            <div class="story-card__metrics">
               <div class="metric">
-                <span class="metric__value" data-count="3" data-suffix="×">3×</span>
+                <span class="metric__value">3×</span>
                 <span class="metric__label">Increase in User Adoption</span>
               </div>
               <div class="metric">
-                <span class="metric__value" data-count="200" data-suffix="+">200+</span>
+                <span class="metric__value">200+</span>
                 <span class="metric__label">Enterprise Clients</span>
               </div>
               <div class="metric">
-                <span class="metric__value" data-count="40" data-suffix="%">40%</span>
+                <span class="metric__value">40%</span>
                 <span class="metric__label">Reduction in Support Tickets</span>
               </div>
             </div>
           </div>
         </article>
 
-        <!-- Story 3 — Facilio -->
-        <article class="story-card" data-reveal>
+        <article class="story-card">
           <div class="story-card__image-wrap">
-            <img
-              src="https://www.figma.com/api/mcp/asset/90dfdb65-eb46-4bb4-9094-245bd76307f3"
-              alt="Facilio — facility operations"
-              loading="lazy"
-            />
+            <img src="https://www.figma.com/api/mcp/asset/90dfdb65-eb46-4bb4-9094-245bd76307f3" alt="Facilio — facility operations" loading="lazy" />
             <a href="#" class="story-card__view" aria-label="View Facilio case study">
               View case study
-              <img
-                src="https://www.figma.com/api/mcp/asset/e9a2d2c6-6189-4f9e-aa8c-8e97748a7aac"
-                alt=""
-                aria-hidden="true"
-              />
+              <span class="material-symbols-rounded" aria-hidden="true">call_made</span>
             </a>
           </div>
           <div class="story-card__info">
             <div class="story-card__top">
               <div class="story-card__logo">
-                <img
-                  src="https://www.figma.com/api/mcp/asset/355be262-265b-4014-8e2a-ffa5a5ec3ea6"
-                  alt="Facilio"
-                  loading="lazy"
-                />
+                <img src="https://www.figma.com/api/mcp/asset/355be262-265b-4014-8e2a-ffa5a5ec3ea6" alt="Facilio" loading="lazy" />
               </div>
-              <h3 class="story-card__title split-text">
+              <h3 class="story-card__title">
                 Connected facility operations platform for global real estate
               </h3>
             </div>
-            <div class="story-card__metrics" data-stagger>
+            <div class="story-card__metrics">
               <div class="metric">
-                <span class="metric__value" data-count="60" data-suffix="%">60%</span>
+                <span class="metric__value">60%</span>
                 <span class="metric__label">Faster Onboarding</span>
               </div>
               <div class="metric">
-                <span class="metric__value" data-count="50" data-suffix="+">50+</span>
+                <span class="metric__value">50+</span>
                 <span class="metric__label">Global Deployments</span>
               </div>
               <div class="metric">
-                <span class="metric__value" data-count="95" data-suffix="%">95%</span>
+                <span class="metric__value">95%</span>
                 <span class="metric__label">Customer Retention Rate</span>
               </div>
             </div>
           </div>
         </article>
 
-        <!-- Story 4 — Jisr -->
-        <article class="story-card" data-reveal>
+        <article class="story-card">
           <div class="story-card__image-wrap">
-            <img
-              src="https://www.figma.com/api/mcp/asset/90dfdb65-eb46-4bb4-9094-245bd76307f3"
-              alt="Jisr — HR and payroll software"
-              loading="lazy"
-            />
+            <img src="https://www.figma.com/api/mcp/asset/90dfdb65-eb46-4bb4-9094-245bd76307f3" alt="Jisr — HR and payroll software" loading="lazy" />
             <a href="#" class="story-card__view" aria-label="View Jisr case study">
               View case study
-              <img
-                src="https://www.figma.com/api/mcp/asset/e9a2d2c6-6189-4f9e-aa8c-8e97748a7aac"
-                alt=""
-                aria-hidden="true"
-              />
+              <span class="material-symbols-rounded" aria-hidden="true">call_made</span>
             </a>
           </div>
           <div class="story-card__info">
             <div class="story-card__top">
               <div class="story-card__logo">
-                <img
-                  src="https://www.figma.com/api/mcp/asset/9b183324-1d03-4cd7-a02a-cfabad178f45"
-                  alt="Jisr"
-                  loading="lazy"
-                />
+                <img src="https://www.figma.com/api/mcp/asset/9b183324-1d03-4cd7-a02a-cfabad178f45" alt="Jisr" loading="lazy" />
               </div>
-              <h3 class="story-card__title split-text">
+              <h3 class="story-card__title">
                 Modern HR &amp; payroll software built for the Arab world
               </h3>
             </div>
-            <div class="story-card__metrics" data-stagger>
+            <div class="story-card__metrics">
               <div class="metric">
-                <span class="metric__value" data-count="80" data-suffix="%">80%</span>
+                <span class="metric__value">80%</span>
                 <span class="metric__label">Reduction in HR Admin Time</span>
               </div>
               <div class="metric">
-                <span class="metric__value" data-count="1000" data-suffix="+">1000+</span>
+                <span class="metric__value">1000+</span>
                 <span class="metric__label">Companies on Platform</span>
               </div>
               <div class="metric">
-                <span class="metric__value" data-count="99" data-suffix="%">99%</span>
+                <span class="metric__value">99%</span>
                 <span class="metric__label">Payroll Accuracy</span>
               </div>
             </div>
@@ -412,20 +300,15 @@
         </article>
 
       </div>
-
     </section>
 
-    <!-- ─────────────────────────────────────────────────
-         TESTIMONIALS
-    ───────────────────────────────────────────────── -->
+    <!-- TESTIMONIALS -->
     <section class="section testimonials" aria-label="Testimonials">
-
-      <div class="section-label" data-reveal>
+      <div class="section-label">
         <span class="section-label__dot" aria-hidden="true"></span>
         Testimonial
       </div>
-
-      <div class="testimonials__grid" data-stagger>
+      <div class="testimonials__grid">
 
         <figure class="testimonial-card">
           <blockquote class="testimonial-card__quote">
@@ -437,11 +320,7 @@
           </blockquote>
           <figcaption class="testimonial-card__author">
             <div class="testimonial-card__avatar">
-              <img
-                src="https://www.figma.com/api/mcp/asset/f1f33d8f-e13f-446f-8d15-cb3529810344"
-                alt="Sarah Mitchell"
-                loading="lazy"
-              />
+              <img src="https://www.figma.com/api/mcp/asset/f1f33d8f-e13f-446f-8d15-cb3529810344" alt="Sarah Mitchell" loading="lazy" />
             </div>
             <div>
               <p class="testimonial-card__name">Sarah Mitchell</p>
@@ -459,11 +338,7 @@
           </blockquote>
           <figcaption class="testimonial-card__author">
             <div class="testimonial-card__avatar">
-              <img
-                src="https://www.figma.com/api/mcp/asset/f1f33d8f-e13f-446f-8d15-cb3529810344"
-                alt="James Chen"
-                loading="lazy"
-              />
+              <img src="https://www.figma.com/api/mcp/asset/f1f33d8f-e13f-446f-8d15-cb3529810344" alt="James Chen" loading="lazy" />
             </div>
             <div>
               <p class="testimonial-card__name">James Chen</p>
@@ -481,11 +356,7 @@
           </blockquote>
           <figcaption class="testimonial-card__author">
             <div class="testimonial-card__avatar">
-              <img
-                src="https://www.figma.com/api/mcp/asset/f1f33d8f-e13f-446f-8d15-cb3529810344"
-                alt="Rania Al-Hassan"
-                loading="lazy"
-              />
+              <img src="https://www.figma.com/api/mcp/asset/f1f33d8f-e13f-446f-8d15-cb3529810344" alt="Rania Al-Hassan" loading="lazy" />
             </div>
             <div>
               <p class="testimonial-card__name">Rania Al-Hassan</p>
@@ -503,11 +374,7 @@
           </blockquote>
           <figcaption class="testimonial-card__author">
             <div class="testimonial-card__avatar">
-              <img
-                src="https://www.figma.com/api/mcp/asset/f1f33d8f-e13f-446f-8d15-cb3529810344"
-                alt="Alex Rivera"
-                loading="lazy"
-              />
+              <img src="https://www.figma.com/api/mcp/asset/f1f33d8f-e13f-446f-8d15-cb3529810344" alt="Alex Rivera" loading="lazy" />
             </div>
             <div>
               <p class="testimonial-card__name">Alex Rivera</p>
@@ -517,25 +384,19 @@
         </figure>
 
       </div>
-
     </section>
 
-    <!-- ─────────────────────────────────────────────────
-         CONTACT
-    ───────────────────────────────────────────────── -->
+    <!-- CONTACT -->
     <section class="section contact" id="contact" aria-label="Contact">
-
-      <div class="section-label" data-reveal>
+      <div class="section-label">
         <span class="section-label__dot" aria-hidden="true"></span>
         Contact
       </div>
-
-      <div class="contact__card" data-reveal>
+      <div class="contact__card">
         <div class="contact__inner">
 
-          <!-- Left: headline + quick links -->
           <div class="contact__left">
-            <h2 class="contact__headline split-text">
+            <h2 class="contact__headline">
               Always open to discuss interesting ideas
             </h2>
             <div class="contact__links">
@@ -549,55 +410,26 @@
             </div>
           </div>
 
-          <!-- Right: contact form -->
           <div class="contact__form-wrap">
             <p class="contact__form-title">
               Feel free to share whatever is on your mind.
             </p>
             <form class="contact__form" id="contactForm" novalidate>
               <div class="contact__row">
-                <input
-                  class="form-input"
-                  type="text"
-                  name="name"
-                  placeholder="Your good name *"
-                  required
-                  autocomplete="name"
-                />
-                <input
-                  class="form-input"
-                  type="email"
-                  name="email"
-                  placeholder="Mail *"
-                  required
-                  autocomplete="email"
-                />
+                <input class="form-input" type="text"  name="name"  placeholder="Your good name *" required autocomplete="name" />
+                <input class="form-input" type="email" name="email" placeholder="Mail *"            required autocomplete="email" />
               </div>
-              <input
-                class="form-input"
-                type="tel"
-                name="phone"
-                placeholder="Phone (optional)"
-                autocomplete="tel"
-              />
-              <textarea
-                class="form-input form-input--textarea"
-                name="message"
-                placeholder="Tell us about your project *"
-                required
-              ></textarea>
-              <button type="submit" class="btn--send">
-                <span>Send message</span>
-              </button>
+              <input class="form-input" type="tel" name="phone" placeholder="Phone (optional)" autocomplete="tel" />
+              <textarea class="form-input form-input--textarea" name="message" placeholder="Tell us about your project *" required></textarea>
+              <button type="submit" class="btn--send"><span>Send message</span></button>
             </form>
           </div>
 
         </div>
       </div>
-
     </section>
 
-  </main><!-- /page-wrapper -->
+  </main>
 
   <script src="assets/js/main.js"></script>
 </body>
