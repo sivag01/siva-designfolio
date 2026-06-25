@@ -6,11 +6,7 @@
 /* -----------------------------------------------------------
    RESET & BASE
 ----------------------------------------------------------- */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
   scroll-behavior: smooth;
@@ -22,85 +18,84 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-base);
   color: var(--clr-text-primary);
-  background: var(--clr-page-bg);
+  background: var(--clr-page-bg); /* fills beyond 1920px max-width */
   overflow-x: hidden;
 }
 
 img { display: block; max-width: 100%; }
-a { text-decoration: none; color: inherit; }
+a   { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; }
 
 /* -----------------------------------------------------------
    PAGE WRAPPER
-   The f5f5f5 bg container that creates the "card gap" look
+   1920px max, centered. Beyond 1920px → body #f5f5f5 shows.
 ----------------------------------------------------------- */
 .page-wrapper {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
   padding: var(--page-pad);
   display: flex;
   flex-direction: column;
   gap: var(--section-gap);
-  max-width: var(--max-w);
-  margin: 0 auto;
 }
 
 /* -----------------------------------------------------------
-   SECTION BASE
-   Each section = a white/colored card sitting on #f5f5f5
+   SECTION BASE — white/colored cards on #f5f5f5 page bg
 ----------------------------------------------------------- */
 .section {
   background: var(--clr-white);
-  padding: var(--sp-4);
+  padding: var(--section-pad);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-10);
+  gap: var(--sp-10);   /* 160px — exact Figma gap-[160px] */
   overflow: hidden;
 }
 
 /* -----------------------------------------------------------
    SECTION LABEL
-   Small label with dot icon before each section
+   CSS diamond dot + label text — no image dependency
 ----------------------------------------------------------- */
 .section-label {
   display: inline-flex;
   align-items: center;
-  gap: var(--sp-2);
+  gap: var(--sp-2);          /* 12px — Figma gap-[12px] */
   font-family: var(--font-body);
   font-weight: var(--fw-regular);
-  font-size: var(--fs-md);
+  font-size: var(--fs-md);   /* 20px */
   line-height: var(--lh-normal);
   color: currentColor;
 }
 
 .section-label__dot {
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 10px;
   flex-shrink: 0;
+  background: currentColor;
+  transform: rotate(45deg);
+  display: inline-block;
 }
 
 /* -----------------------------------------------------------
-   SCROLL REVEAL — base states
-   JS adds .is-visible when element enters viewport
+   SCROLL REVEAL ANIMATIONS
+   JS adds .is-visible when element enters viewport.
+   .js class ensures graceful no-JS fallback.
 ----------------------------------------------------------- */
 
-/* Simple fade-up */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(36px);
+  transform: translateY(32px);
   transition:
-    opacity  var(--dur-slow) var(--ease-out),
+    opacity   var(--dur-slow) var(--ease-out),
     transform var(--dur-slow) var(--ease-out);
 }
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+[data-reveal].is-visible { opacity: 1; transform: none; }
 
-/* Stagger children */
 [data-stagger] > * {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(24px);
   transition:
-    opacity  var(--dur-slow) var(--ease-out),
+    opacity   var(--dur-slow) var(--ease-out),
     transform var(--dur-slow) var(--ease-out);
 }
 [data-stagger].is-visible > *:nth-child(1)  { opacity:1; transform:none; transition-delay: 0.00s; }
@@ -111,29 +106,20 @@ button { font-family: inherit; cursor: pointer; }
 [data-stagger].is-visible > *:nth-child(6)  { opacity:1; transform:none; transition-delay: 0.50s; }
 [data-stagger].is-visible > *:nth-child(n+7){ opacity:1; transform:none; transition-delay: 0.55s; }
 
-/* -----------------------------------------------------------
-   WORD REVEAL (split-text)
-   JS splits text into .word > .word-inner spans
-   .js class ensures graceful no-JS fallback
------------------------------------------------------------ */
+/* Word reveal — JS splits text into .word > .word-inner */
 .js .split-text .word {
   overflow: hidden;
   display: inline-block;
   vertical-align: bottom;
   line-height: inherit;
 }
-
 .js .split-text .word-inner {
   display: inline-block;
   transform: translateY(115%);
   transition: transform var(--dur-slower) var(--ease-out);
 }
+.js .split-text.is-visible .word-inner { transform: none; }
 
-.js .split-text.is-visible .word-inner {
-  transform: translateY(0);
-}
-
-/* Stagger each word */
 .js .split-text.is-visible .word:nth-child(1)  .word-inner { transition-delay: 0.00s; }
 .js .split-text.is-visible .word:nth-child(2)  .word-inner { transition-delay: 0.04s; }
 .js .split-text.is-visible .word:nth-child(3)  .word-inner { transition-delay: 0.08s; }
@@ -144,13 +130,9 @@ button { font-family: inherit; cursor: pointer; }
 .js .split-text.is-visible .word:nth-child(8)  .word-inner { transition-delay: 0.28s; }
 .js .split-text.is-visible .word:nth-child(9)  .word-inner { transition-delay: 0.32s; }
 .js .split-text.is-visible .word:nth-child(10) .word-inner { transition-delay: 0.36s; }
-.js .split-text.is-visible .word:nth-child(11) .word-inner { transition-delay: 0.38s; }
-.js .split-text.is-visible .word:nth-child(n+12).word-inner { transition-delay: 0.40s; }
+.js .split-text.is-visible .word:nth-child(n+11).word-inner{ transition-delay: 0.40s; }
 
-/* -----------------------------------------------------------
-   LETTER REVEAL (hero name)
-   JS splits into .char spans; hidden state set by JS via .js-split
------------------------------------------------------------ */
+/* Letter reveal — hero name */
 .hero__name.js-split .char {
   display: inline-block;
   opacity: 0;
@@ -159,9 +141,7 @@ button { font-family: inherit; cursor: pointer; }
     opacity   var(--dur-slow) var(--ease-out),
     transform var(--dur-slow) var(--ease-out);
 }
-
 .hero__name.is-visible .char { opacity: 1; transform: none; }
-
 .hero__name.is-visible .char:nth-child(1)  { transition-delay: 0.00s; }
 .hero__name.is-visible .char:nth-child(2)  { transition-delay: 0.05s; }
 .hero__name.is-visible .char:nth-child(3)  { transition-delay: 0.10s; }
@@ -178,38 +158,53 @@ button { font-family: inherit; cursor: pointer; }
 ----------------------------------------------------------- */
 .navbar {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0; left: 50%; right: auto;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-w);
   z-index: 200;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px var(--page-pad);
-  max-width: var(--max-w);
-  margin: 0 auto;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
+  padding: 10px var(--page-pad);         /* Figma: py-[12px] pl-[24px] pr-[12px] */
   transition:
-    background var(--dur-base) var(--ease-out),
-    box-shadow var(--dur-base) var(--ease-out),
-    backdrop-filter var(--dur-base);
+    background       var(--dur-base) var(--ease-out),
+    box-shadow       var(--dur-base) var(--ease-out),
+    backdrop-filter  var(--dur-base) var(--ease-out);
 }
 
 .navbar.is-scrolled {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.07);
 }
 
 .navbar__logo {
   font-family: var(--font-mono);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-base);
-  color: var(--clr-black);
+  font-size: var(--fs-base);             /* 16px */
   line-height: var(--lh-snug);
   letter-spacing: 0.04em;
+  color: var(--clr-black);
 }
+
+.btn--nav {
+  background: var(--clr-white);
+  color: var(--clr-black);
+  font-family: var(--font-body);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-base);             /* 16px */
+  line-height: var(--lh-snug);
+  padding: 1rem var(--sp-4);             /* Figma: py-[16px] px-[24px] */
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: background var(--dur-base) var(--ease-out);
+}
+.btn--nav:hover { background: var(--clr-page-bg); }
 
 /* -----------------------------------------------------------
    BUTTONS
@@ -220,9 +215,9 @@ button { font-family: inherit; cursor: pointer; }
   gap: var(--sp-2);
   font-family: var(--font-body);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-md);
-  line-height: var(--lh-snug);
-  padding: var(--sp-4) var(--sp-6);
+  font-size: var(--fs-md);              /* 20px */
+  line-height: var(--lh-normal);
+  padding: var(--sp-4) var(--sp-6);    /* Figma: py-[24px] px-[40px] */
   white-space: nowrap;
   border: none;
   outline: none;
@@ -230,15 +225,14 @@ button { font-family: inherit; cursor: pointer; }
   position: relative;
   overflow: hidden;
   transition:
-    background  var(--dur-base) var(--ease-out),
-    color       var(--dur-base) var(--ease-out),
+    background   var(--dur-base) var(--ease-out),
+    color        var(--dur-base) var(--ease-out),
     border-color var(--dur-base) var(--ease-out),
-    transform   var(--dur-fast) var(--ease-out);
+    transform    var(--dur-fast) var(--ease-out);
 }
-
 .btn:active { transform: scale(0.98); }
 
-/* Shimmer overlay on hover */
+/* Shimmer sweep on hover */
 .btn::before {
   content: '';
   position: absolute;
@@ -254,12 +248,15 @@ button { font-family: inherit; cursor: pointer; }
   background: var(--clr-black);
   color: var(--clr-white);
 }
-.btn--dark:hover { background: #222; }
+.btn--dark:hover { background: #1a1a1a; }
 
+/* "To know more" — Figma: border-[#ccc] w-[600px] px-[40px] py-[24px] */
 .btn--outline {
-  background: transparent;
+  background: var(--clr-white);
   color: var(--clr-black);
   border: 1px solid var(--clr-border-mid);
+  justify-content: space-between;
+  width: clamp(280px, 37.8%, 600px);   /* Figma: w-[600px] out of 1584px ≈ 37.8% */
 }
 .btn--outline:hover {
   background: var(--clr-black);
@@ -267,70 +264,69 @@ button { font-family: inherit; cursor: pointer; }
   border-color: var(--clr-black);
 }
 
-.btn--nav {
-  background: var(--clr-white);
-  color: var(--clr-black);
-  font-size: var(--fs-base);
-  padding: 0.875rem var(--sp-4);
-}
-.btn--nav:hover { background: var(--clr-page-bg); }
-
-/* Icon inside button */
 .btn__icon {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  transition: transform var(--dur-base) var(--ease-out);
+  transition: transform var(--dur-base) var(--ease-out), filter var(--dur-base);
 }
-.btn--dark:hover .btn__icon { transform: translate(2px, -2px); }
-.btn--outline:hover .btn__icon { filter: invert(1); transform: translate(3px, 0); }
+.btn--dark:hover    .btn__icon { transform: translate(2px, -2px); }
+.btn--outline:hover .btn__icon { filter: invert(1); transform: translateX(3px); }
 
 /* -----------------------------------------------------------
    HERO SECTION
+   No padding on the section itself — image bleeds full width,
+   content padded inside hero__content.
 ----------------------------------------------------------- */
 .hero {
-  position: relative;
   padding: 0;
   gap: 0;
-  overflow: visible;
+  overflow: hidden;
+  position: relative;
 }
 
+/* Hero image — aspect-ratio locked, changes per breakpoint via ds.css */
 .hero__image-wrap {
   width: 100%;
-  height: clamp(240px, 28vw, 480px);
+  aspect-ratio: var(--ratio-hero);     /* 4/1 desktop → 2/1 tablet → 3/2 mobile */
   overflow: hidden;
   position: relative;
 }
 
 .hero__image {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 130%;          /* extra height for parallax travel */
+  height: 110%;             /* extra for parallax travel */
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   will-change: transform;
 }
 
+/* Content below image */
 .hero__content {
+  padding: var(--section-pad);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-10);
-  padding: var(--sp-4);
+  gap: var(--sp-10);        /* 160px — Figma gap-[160px] */
 }
 
+/* SIVAGANESH — font-size set by JS scaleToFitWidth */
 .hero__name {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-hero);
+  font-size: 1px;           /* overridden by JS */
   line-height: var(--lh-tightest);
   text-transform: uppercase;
   letter-spacing: -0.01em;
   color: var(--clr-black);
   white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
   display: block;
+  width: 100%;
+  overflow: hidden;
 }
 
+/* Bio + Download row — Figma: justify-between, bio w-[600px], btn w-[600px] */
 .hero__meta {
   display: flex;
   align-items: center;
@@ -339,25 +335,27 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .hero__bio {
-  font-size: var(--fs-md);
+  font-size: var(--fs-md);             /* 20px */
   font-weight: var(--fw-regular);
   line-height: var(--lh-normal);
-  color: var(--clr-text-secondary);
-  max-width: 560px;
-  flex: 1;
+  color: var(--clr-text-secondary);   /* #666 */
+  flex: 0 0 calc(50% - var(--sp-3));
+  max-width: 600px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .hero__meta {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--sp-4);
   }
-  .hero__bio { max-width: 100%; }
-  .btn--dark { width: 100%; justify-content: space-between; }
+  .hero__bio { flex: none; max-width: 100%; }
+  .btn--dark  { width: 100%; justify-content: space-between; }
 }
 
 /* -----------------------------------------------------------
    COMPANIES SECTION
+   Figma: 2 rows × 5 logos, aspect-ratio 1216/480, gap-[8px]
 ----------------------------------------------------------- */
 .companies__grid {
   display: flex;
@@ -372,13 +370,15 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .companies__item {
-  aspect-ratio: 1216 / 480;
+  aspect-ratio: var(--ratio-company);  /* 1216/480 — exact Figma */
   overflow: hidden;
   position: relative;
   background: var(--clr-page-bg);
 }
 
 .companies__item img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -388,29 +388,24 @@ button { font-family: inherit; cursor: pointer; }
 .companies__item:hover img { transform: scale(1.05); }
 
 @media (max-width: 768px) {
-  .companies__row {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .companies__row:last-child .companies__item:last-child {
-    display: none; /* hide 10th item on 3-col layout */
-  }
+  .companies__row { grid-template-columns: repeat(3, 1fr); }
 }
-
 @media (max-width: 480px) {
   .companies__row { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* -----------------------------------------------------------
    ABOUT / INTRO SECTION
+   Figma: text-[72px] font-semibold leading-[0.8]
+   with ~11-space indent via whitespace-pre-wrap
 ----------------------------------------------------------- */
 .about__quote {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-3xl);
-  line-height: var(--lh-tightest);
+  font-size: var(--fs-3xl);            /* 72px */
+  line-height: var(--lh-tightest);     /* 0.8 */
   color: var(--clr-black);
-  /* indented like the Figma (leading whitespace) */
-  padding-left: 5rem;
+  text-indent: 8ch;                    /* matches Figma's leading whitespace indent */
 }
 
 .about__cta {
@@ -419,27 +414,28 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 @media (max-width: 768px) {
-  .about__quote { padding-left: 0; }
+  .about__quote { text-indent: 0; }
 }
 
 /* -----------------------------------------------------------
    AREAS SECTION
+   Figma: 3 equal columns, each h-[680px], gap-[24px]
+   Aspect ratio 3/4 — portrait cards
 ----------------------------------------------------------- */
 .areas__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--sp-4);
+  gap: var(--section-pad);             /* 24px */
 }
 
 .area-card {
+  aspect-ratio: var(--ratio-area);     /* 3/4 desktop, 16/9 mobile via ds.css */
   position: relative;
-  height: clamp(340px, 45vw, 680px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: var(--sp-4);
-  cursor: default;
+  padding: var(--section-pad);
 }
 
 .area-card__bg {
@@ -450,6 +446,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .area-card__bg img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -459,10 +457,7 @@ button { font-family: inherit; cursor: pointer; }
     opacity   var(--dur-base)   var(--ease-out);
 }
 
-.area-card:hover .area-card__bg img {
-  transform: scale(1.06);
-  opacity: 0.65;
-}
+.area-card:hover .area-card__bg img { transform: scale(1.06); opacity: 0.65; }
 
 .area-card__num,
 .area-card__title {
@@ -470,49 +465,51 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 1;
   font-family: var(--font-body);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-lg);
+  font-size: var(--fs-lg);             /* 24px */
   line-height: var(--lh-normal);
   color: var(--clr-white);
 }
-
 .area-card__title {
   text-align: right;
   transition: letter-spacing var(--dur-base) var(--ease-out);
 }
-
 .area-card:hover .area-card__title { letter-spacing: 0.04em; }
 
 @media (max-width: 900px) {
   .areas__grid { grid-template-columns: 1fr; }
-  .area-card { height: 320px; }
 }
 
 /* -----------------------------------------------------------
    SUCCESS STORIES SECTION
+   Figma: card p-[40px], image w-[800px] h-[600px],
+   gap-[80px] between image and info, gap-[24px] between cards
 ----------------------------------------------------------- */
 .stories__list {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-4);
+  gap: var(--section-pad);             /* 24px */
 }
 
 .story-card {
   background: var(--clr-page-bg);
-  padding: var(--sp-6);
+  padding: var(--sp-6);                /* 40px — Figma p-[40px] */
   display: grid;
   grid-template-columns: minmax(0, 800px) 1fr;
-  gap: var(--sp-8);
+  gap: var(--sp-8);                    /* 80px — Figma gap-[80px] */
   align-items: stretch;
 }
 
+/* Image — aspect-ratio: 4/3 → at max 800px width → 600px tall */
 .story-card__image-wrap {
   position: relative;
-  height: clamp(280px, 40vw, 600px);
+  aspect-ratio: var(--ratio-story);    /* 4/3 desktop, 16/9 mobile via ds.css */
   overflow: hidden;
-  flex-shrink: 0;
+  align-self: start;
 }
 
 .story-card__image-wrap img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -521,16 +518,17 @@ button { font-family: inherit; cursor: pointer; }
 
 .story-card:hover .story-card__image-wrap img { transform: scale(1.04); }
 
+/* "View case study" button — bottom-right of image */
 .story-card__view {
   position: absolute;
   bottom: 0; right: 0;
   background: var(--clr-white);
-  padding: 1.1rem var(--sp-6);
+  padding: 1.25rem var(--sp-6);        /* Figma: py-[20px] px-[40px] */
   display: flex;
   align-items: center;
-  gap: var(--sp-1);
+  gap: var(--sp-2);
   font-family: var(--font-body);
-  font-size: var(--fs-base);
+  font-size: var(--fs-base);           /* 16px */
   font-weight: var(--fw-medium);
   line-height: var(--lh-snug);
   color: var(--clr-black);
@@ -539,82 +537,89 @@ button { font-family: inherit; cursor: pointer; }
     background var(--dur-base) var(--ease-out),
     color      var(--dur-base) var(--ease-out);
 }
-
-.story-card__view:hover {
-  background: var(--clr-black);
-  color: var(--clr-white);
-}
-
+.story-card__view:hover { background: var(--clr-black); color: var(--clr-white); }
 .story-card__view img {
-  width: 16px; height: 16px;
-  flex-shrink: 0;
-  transition: filter var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  width: 16px; height: 16px; flex-shrink: 0;
+  transition: filter var(--dur-base), transform var(--dur-base) var(--ease-out);
 }
-.story-card__view:hover img {
-  filter: invert(1);
-  transform: translate(2px, -2px);
-}
+.story-card__view:hover img { filter: invert(1); transform: translate(2px, -2px); }
 
+/* Info column — stretches to match image height */
 .story-card__info {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: clamp(280px, 40vw, 600px);
+  gap: var(--sp-6);
 }
 
-.story-card__top { display: flex; flex-direction: column; gap: var(--sp-4); }
+.story-card__top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-pad);             /* 24px */
+}
 
 .story-card__logo {
   display: inline-flex;
+  align-items: center;
   background: var(--clr-white);
   border-radius: var(--radius-sm);
-  padding: var(--sp-1) var(--sp-2);
+  padding: var(--sp-1) var(--sp-2);    /* Figma: py-[8px] px-[12px] */
   align-self: flex-start;
 }
-.story-card__logo img { height: 24px; width: auto; object-fit: contain; }
+.story-card__logo img {
+  height: 24px;
+  width: 100px;
+  object-fit: contain;
+}
 
+/* Figma: text-[56px] font-semibold leading-[0.8] */
 .story-card__title {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-2xl);
-  line-height: var(--lh-tightest);
+  font-size: var(--fs-2xl);            /* 56px */
+  line-height: var(--lh-tightest);     /* 0.8 */
   color: var(--clr-black);
   text-transform: lowercase;
 }
 
+/* Metrics — Figma: gap-[32px] between items */
 .story-card__metrics {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-5);
+  gap: var(--sp-5);                    /* 32px */
 }
 
 .metric {
   border-top: 1px solid var(--clr-border);
-  padding-top: var(--sp-3);
+  padding-top: var(--sp-3);           /* 16px */
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
+/* Figma: text-[40px] font-semibold leading-[1.2] uppercase */
 .metric__value {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-xl);
+  font-size: var(--fs-xl);            /* 40px */
   line-height: var(--lh-snug);
   color: var(--clr-black);
   text-transform: uppercase;
-  display: inline-block;
+  display: block;
+  font-variant-numeric: tabular-nums;
 }
 
 .metric__label {
   font-size: var(--fs-base);
   font-weight: var(--fw-regular);
-  color: var(--clr-text-muted);
-  line-height: var(--lh-snug);
+  color: var(--clr-text-muted);       /* #7a7a7a */
 }
 
 @media (max-width: 1100px) {
-  .story-card { grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+  .story-card {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-4);
+  }
 }
 
 @media (max-width: 768px) {
@@ -623,12 +628,15 @@ button { font-family: inherit; cursor: pointer; }
     padding: var(--sp-4);
     gap: var(--sp-4);
   }
-  .story-card__image-wrap { height: 260px; }
-  .story-card__info { height: auto; gap: var(--sp-5); }
+  .story-card__image-wrap { align-self: auto; }
+  .story-card__info { gap: var(--sp-4); }
+  .story-card__view { padding: 0.875rem var(--sp-4); }
 }
 
 /* -----------------------------------------------------------
    TESTIMONIALS SECTION
+   Figma: bg-[#ab7149], 2×2 grid, gap-[16px],
+   cards p-[40px] bg-[#faf5f1]
 ----------------------------------------------------------- */
 .testimonials {
   background: var(--clr-warm);
@@ -638,26 +646,25 @@ button { font-family: inherit; cursor: pointer; }
 .testimonials__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--sp-3);
+  gap: var(--sp-3);                    /* 16px — Figma gap-[16px] */
 }
 
 .testimonial-card {
   background: var(--clr-warm-light);
-  padding: var(--sp-6);
+  padding: var(--sp-6);                /* 40px */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: var(--sp-7);
+  gap: var(--sp-7);                    /* 64px — Figma gap-[64px] */
   transition: transform var(--dur-base) var(--ease-out);
 }
-
 .testimonial-card:hover { transform: translateY(-4px); }
 
+/* Figma: font-medium italic text-[24px] leading-[1.4] */
 .testimonial-card__quote {
-  font-family: var(--font-body);
   font-style: italic;
   font-weight: var(--fw-medium);
-  font-size: var(--fs-lg);
+  font-size: var(--fs-lg);            /* 24px */
   line-height: var(--lh-normal);
   color: var(--clr-black);
 }
@@ -665,31 +672,32 @@ button { font-family: inherit; cursor: pointer; }
 .testimonial-card__author {
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
+  gap: var(--sp-3);                   /* 16px */
 }
 
 .testimonial-card__avatar {
   width: 52px;
   height: 52px;
+  aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
   background: var(--clr-border);
 }
-
 .testimonial-card__avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Figma: font-semibold text-[20px] */
 .testimonial-card__name {
   font-weight: var(--fw-semibold);
   font-size: var(--fs-md);
   line-height: var(--lh-normal);
   color: var(--clr-black);
 }
-
+/* Figma: font-medium text-[14px] */
 .testimonial-card__role {
   font-weight: var(--fw-medium);
   font-size: var(--fs-sm);
@@ -701,10 +709,13 @@ button { font-family: inherit; cursor: pointer; }
 @media (max-width: 768px) {
   .testimonials__grid { grid-template-columns: 1fr; }
   .testimonial-card__quote { font-size: var(--fs-md); }
+  .testimonial-card { gap: var(--sp-5); }
 }
 
 /* -----------------------------------------------------------
    CONTACT / FOOTER SECTION
+   Figma: bg-black, card bg-[#1a1a1a] p-[40px],
+   inner gap-[120px], right col w-[680px]
 ----------------------------------------------------------- */
 .contact {
   background: var(--clr-black);
@@ -713,13 +724,14 @@ button { font-family: inherit; cursor: pointer; }
 
 .contact__card {
   background: var(--clr-dark);
-  padding: var(--sp-6);
+  padding: var(--sp-6);               /* 40px */
 }
 
+/* Figma: flex gap-[120px] — left: 1fr, right: 680px */
 .contact__inner {
   display: grid;
   grid-template-columns: 1fr minmax(0, 680px);
-  gap: 7.5rem;
+  gap: var(--sp-9);                   /* 120px */
   align-items: start;
 }
 
@@ -731,42 +743,42 @@ button { font-family: inherit; cursor: pointer; }
   gap: var(--sp-10);
 }
 
+/* Figma: text-[104px] font-semibold leading-[0.8] */
 .contact__headline {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-4xl);
-  line-height: var(--lh-tightest);
+  font-size: var(--fs-4xl);           /* 104px */
+  line-height: var(--lh-tightest);    /* 0.8 */
   color: var(--clr-white);
 }
 
 .contact__links {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-7);
+  gap: var(--sp-7);                   /* 64px — Figma gap-[64px] */
 }
 
+/* Figma: font-semibold text-[24px] */
 .contact__links-title {
-  font-family: var(--font-body);
   font-weight: var(--fw-semibold);
   font-size: var(--fs-lg);
   line-height: var(--lh-normal);
   color: var(--clr-white);
 }
 
+/* Figma: gap-[80px] between items, text-[20px] color-[#cdcdcd] */
 .contact__links-nav {
   display: flex;
-  gap: var(--sp-8);
+  gap: var(--sp-8);                   /* 80px */
   flex-wrap: wrap;
 }
 
 .contact__link {
   font-size: var(--fs-md);
-  line-height: var(--lh-normal);
   color: var(--clr-text-dim);
   position: relative;
   transition: color var(--dur-base) var(--ease-out);
 }
-
 .contact__link::after {
   content: '';
   position: absolute;
@@ -775,17 +787,17 @@ button { font-family: inherit; cursor: pointer; }
   background: var(--clr-white);
   transition: width var(--dur-base) var(--ease-out);
 }
-
 .contact__link:hover { color: var(--clr-white); }
 .contact__link:hover::after { width: 100%; }
 
-/* Contact form */
+/* Form wrapper — Figma: gap-[80px] between title and form */
 .contact__form-wrap {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-6);
+  gap: var(--sp-8);                   /* 80px */
 }
 
+/* Figma: font-semibold text-[24px] leading-[1.5] */
 .contact__form-title {
   font-weight: var(--fw-semibold);
   font-size: var(--fs-lg);
@@ -793,18 +805,21 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--clr-white);
 }
 
+/* Figma: gap-[24px] between fields */
 .contact__form {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-4);
+  gap: var(--sp-4);                   /* 24px */
 }
 
+/* Figma: gap-[16px] between name and email */
 .contact__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--sp-3);
+  gap: var(--sp-3);                   /* 16px */
 }
 
+/* Figma: bg-black border-[#525252] rounded-[4px] p-[24px] text-[16px] */
 .form-input {
   background: var(--clr-black);
   border: 1px solid var(--clr-border-dark);
@@ -822,13 +837,13 @@ button { font-family: inherit; cursor: pointer; }
     border-color var(--dur-base) var(--ease-out),
     box-shadow   var(--dur-base) var(--ease-out);
 }
-
 .form-input::placeholder { color: rgba(255,255,255,0.35); }
 .form-input:focus {
-  border-color: rgba(255,255,255,0.6);
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.55);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
 }
 
+/* Figma: h-[240px] */
 .form-input--textarea {
   height: 240px;
   resize: vertical;
@@ -836,25 +851,24 @@ button { font-family: inherit; cursor: pointer; }
   min-height: 120px;
 }
 
+/* Figma: bg-white text-[24px] px-[32px] py-[16px] */
 .btn--send {
   align-self: flex-start;
   background: var(--clr-white);
   color: var(--clr-black);
-  padding: 1rem var(--sp-5);
+  padding: 1rem var(--sp-5);           /* 16px 32px */
   font-family: var(--font-body);
   font-weight: var(--fw-medium);
-  font-size: var(--fs-lg);
+  font-size: var(--fs-lg);             /* 24px */
   line-height: var(--lh-snug);
   border: none;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition:
-    background var(--dur-base) var(--ease-out),
-    color      var(--dur-base) var(--ease-out),
-    transform  var(--dur-fast) var(--ease-out);
+    color     var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
 }
-
 .btn--send::before {
   content: '';
   position: absolute;
@@ -869,17 +883,18 @@ button { font-family: inherit; cursor: pointer; }
 .btn--send span { position: relative; z-index: 1; }
 .btn--send:hover { color: var(--clr-white); }
 .btn--send:active { transform: scale(0.98); }
-.btn--send:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn--send:disabled { opacity: 0.55; cursor: not-allowed; }
 
 @media (max-width: 1200px) {
   .contact__inner {
     grid-template-columns: 1fr;
     gap: var(--sp-8);
   }
-  .contact__left { justify-content: flex-start; }
+  .contact__left { align-self: auto; }
 }
 
 @media (max-width: 480px) {
-  .contact__row { grid-template-columns: 1fr; }
-  .btn--send { width: 100%; justify-content: center; }
+  .contact__row  { grid-template-columns: 1fr; }
+  .btn--send     { width: 100%; justify-content: center; }
+  .contact__links-nav { gap: var(--sp-4); }
 }
