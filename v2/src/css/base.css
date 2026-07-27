@@ -1,0 +1,186 @@
+/* =============================================================
+   BASE — reset, document defaults, shared primitives
+   ============================================================= */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto; /* Lenis owns scrolling */
+}
+
+body {
+  background: var(--c-white);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img,
+svg { display: block; max-width: 100%; }
+
+/* Native cursor is hidden ONLY once cursor.js has confirmed a
+   replacement exists (`has-cursor` is set from JS, never in CSS). A
+   failed bundle, a blocked module, or reduced motion therefore all keep
+   the normal arrow rather than leaving the page with no cursor.
+   The `*` is needed because links, buttons and text set their own
+   cursor, which would otherwise win over the value on <html>. */
+html.has-cursor,
+html.has-cursor * { cursor: none; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ul { list-style: none; }
+
+:focus-visible {
+  outline: 2px solid var(--c-ink);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* Skip link — visible only on keyboard focus */
+.skip-link {
+  position: absolute;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: calc(var(--z-nav) + 1);
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--c-black);
+  color: var(--c-white);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible { transform: translateY(0); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* -----------------------------------------------------------
+   SHARED PRIMITIVES
+----------------------------------------------------------- */
+
+/* Every section shares the same 1488px measure and gutter. */
+.shell {
+  width: 100%;
+  max-width: calc(var(--shell) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Label + content two-column rhythm used by intro and works. */
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--label-gap);
+  width: 100%;
+}
+
+.row__label {
+  flex: 0 0 var(--label-col);
+  width: var(--label-col);
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-mono-base);
+  line-height: var(--lh-mono-base);
+  letter-spacing: var(--track-mono);
+  color: var(--c-muted);
+}
+
+.row__body {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  /* Stacking flips the cross axis to horizontal, so `flex-start`
+     would shrink every child to its content width — which collapses
+     any grid inside. Stretch is what we want once stacked. */
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .row__label {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  .row__body {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+/* Mono UI text — nav links, pills, indices. */
+.mono {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+}
+
+/* Pill button, black or white ground. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-mono-sm);
+  line-height: var(--lh-mono-sm);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+/* Icon inside a pill — sized in em so it tracks the label. The glyph is
+   a FILLED Material Symbol, which reads heavier than a stroked one at
+   the same box, so it sits smaller than a hairline icon would. */
+.pill__icon {
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+  background: currentColor;
+  -webkit-mask: url('/download.svg') no-repeat center / contain;
+  mask: url('/download.svg') no-repeat center / contain;
+}
+
+.pill--dark  { background: var(--c-black); color: var(--c-white); }
+.pill--light { background: var(--c-white); color: var(--c-black); }
+
+.pill--dark:hover  { background: #262626; }
+.pill--light:hover { background: #e5e5e5; }

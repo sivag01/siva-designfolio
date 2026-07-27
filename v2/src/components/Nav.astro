@@ -1,0 +1,53 @@
+---
+/**
+ * The site nav. Defined once, used by every page through BaseLayout —
+ * editing this file changes the nav everywhere.
+ *
+ * `active` lets a page mark which link it belongs to. The home page
+ * leaves it unset and lets nav.js set the state from scroll position;
+ * a case study page passes "works" so the link is lit on arrival.
+ */
+interface Props {
+  active?: 'works' | 'about' | null;
+}
+const { active = null } = Astro.props;
+
+const links = [
+  { id: 'works', label: 'Works', href: '/#works' },
+  { id: 'about', label: 'About', href: '/#about' },
+] as const;
+---
+
+<header class="nav" id="nav" data-nav>
+  <div class="nav__inner">
+    <a class="nav__mark mono" href="/" aria-label="Sivaganesh — home">
+      <!-- Availability dot: mint halo, green core. Drawn in CSS rather
+           than an SVG export so the two colours stay tokenised. -->
+      <span class="nav__dot" aria-hidden="true"></span>
+      <span>Sivag.</span>
+    </a>
+
+    <nav class="nav__actions" aria-label="Primary">
+      <ul class="nav__links">
+        {links.map((link) => (
+          <li>
+            <a
+              class:list={['nav__link', 'mono', { 'is-active': active === link.id }]}
+              href={link.href}
+              data-nav-link
+            >{link.label}</a>
+          </li>
+        ))}
+      </ul>
+      <!-- No data-magnetic: the nav is fixed and always on screen, so a
+           pill that drifts under the cursor there reads as instability
+           rather than polish. The closing CTA pills keep it. -->
+      <a class="pill pill--dark" href="/resume.pdf">
+        Resume
+        <!-- Mask, not an <img>, so the glyph takes currentColor and
+             inverts with the pill instead of needing a second asset. -->
+        <span class="pill__icon" aria-hidden="true"></span>
+      </a>
+    </nav>
+  </div>
+</header>

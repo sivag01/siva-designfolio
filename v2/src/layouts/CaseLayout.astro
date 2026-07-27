@@ -1,0 +1,32 @@
+---
+/**
+ * Case study wrapper. Adds the case-only stylesheet and boots the case
+ * page script on top of BaseLayout, so an individual case study page is
+ * just a composition of sections with no boilerplate.
+ *
+ * `case.css` is imported here rather than in BaseLayout so the home page
+ * never downloads it.
+ */
+import BaseLayout from './BaseLayout.astro';
+import '../css/case.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+const { title, description, ogImage } = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  navActive="works"
+>
+  <slot />
+
+  <script>
+    import '../js/pages/case.js';
+  </script>
+</BaseLayout>

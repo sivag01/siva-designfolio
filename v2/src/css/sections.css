@@ -1,0 +1,692 @@
+/* =============================================================
+   SECTIONS — layout for each band of the page
+   Order matches the document: nav, hero, intro, works, cta.
+   ============================================================= */
+
+/* ─────────────────────────────────────────────────────────────
+   NAV — fixed, transparent over the hero, solid once past it
+───────────────────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-nav);
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+  border-bottom: 1px solid transparent;
+}
+
+/* Set by JS once the hero is behind us. */
+.nav.is-solid {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom-color: var(--c-border);
+}
+
+/* Set by JS while scrolling down. */
+.nav.is-hidden { transform: translateY(-100%); }
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--nav-pad-y) var(--nav-pad-x);
+}
+
+.nav__mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-size: var(--fs-mono-base);
+  line-height: normal;
+  color: var(--c-black);
+}
+
+/* Availability dot — mint halo with a green core. Static. */
+.nav__dot {
+  position: relative;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--c-dot-ring);
+}
+
+.nav__dot::before {
+  content: '';
+  width: var(--dot-core);
+  height: var(--dot-core);
+  border-radius: 50%;
+  background: var(--c-dot-core);
+}
+
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.nav__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-mono-sm);
+  line-height: var(--lh-mono-sm);
+  color: var(--c-black);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.nav__link:hover { background: rgba(0, 0, 0, 0.05); }
+
+/* Set by JS when the matching section is in view. */
+.nav__link.is-active { background: rgba(0, 0, 0, 0.08); }
+
+@media (max-width: 560px) {
+  .nav__links { display: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: var(--hero-h);
+  padding: var(--hero-pad-y) var(--gutter);
+  overflow: hidden;
+}
+
+.hero__field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ── Hero marquee ──────────────────────────────────────────────
+   Bled past the hero on all sides so the parallax drift and the
+   horizontal scroll never expose an edge. */
+.hero__marquee {
+  position: absolute;
+  inset: -14% 0;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-weight: var(--fw-regular);
+  font-size: var(--marquee-fs);
+  letter-spacing: var(--track-mono);
+  line-height: 1;
+  color: var(--c-marquee-ink);
+  user-select: none;
+  will-change: transform;
+}
+
+.marquee__row {
+  display: flex;
+  height: var(--marquee-row);
+  align-items: center;
+  overflow: hidden;
+}
+
+.marquee__track {
+  display: flex;
+  flex: none;
+  animation: marquee-left calc(var(--marquee-dur) * var(--mq-scale, 1))
+    linear infinite;
+  /* Negative delay = start mid-cycle, so rows are out of phase. */
+  animation-delay: calc(
+    var(--marquee-dur) * var(--mq-scale, 1) * var(--mq-phase, 0)
+  );
+}
+
+.marquee__row--reverse .marquee__track { animation-name: marquee-right; }
+
+/* The trailing gap belongs INSIDE the set, not between the two sets —
+   otherwise the track is not exactly two set-widths and -50% lands
+   half a gap off, which shows up as a jump once per cycle. */
+.marquee__set {
+  display: flex;
+  flex: none;
+  gap: var(--marquee-gap);
+  padding-right: var(--marquee-gap);
+}
+
+.marquee__word { white-space: pre; }
+
+@keyframes marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+/* Radial white veil: transparent at centre, solid at the rim.
+   Transcribed from the Figma radial fill on node 2034:107. */
+.hero__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+/* ── Glass portrait frame ──────────────────────────────────────
+   64px radius, a 4% BLACK veil, a 2px backdrop blur and a solid-white
+   inner glow offset 2px down. No displacement filter, no tint
+   gradient, no specular edges, no pointer sheen.
+
+   Single element by design — with the SVG displacement gone there is
+   nothing that would warp the photograph, so the separate refraction
+   / tint / shine layers are no longer needed. */
+.portrait {
+  position: relative;
+  width: var(--portrait-w);
+  max-width: 100%;
+  padding: var(--sp-8);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+
+  background: var(--glass-fill);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 var(--glass-glow-y) var(--glass-glow) var(--glass-glow-ink);
+}
+
+/* Photograph. Radius 24px (--r-lg), nested inside the card's 64px.
+   Deliberately NO aspect-ratio here — the frame takes its height from
+   the image so the file's own proportions survive uncropped. Swap in a
+   differently-shaped photo and the card just adapts. */
+.portrait__frame {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: #d9d9d9;
+}
+
+.portrait__img {
+  width: 100%;
+  /* `auto` + the width/height attributes on the tag = the file's own
+     ratio, with no crop and no layout shift on decode. No object-fit
+     or object-position: there is nothing left to fit or reposition. */
+  height: auto;
+  /* Matching the frame's radius as well as being clipped by it — the
+     entrance tween scales this image, and a scaled child can leave a
+     hairline at the parent's rounded corners under clip alone. */
+  border-radius: inherit;
+  will-change: transform;
+}
+
+@media (max-width: 900px) {
+  .portrait { padding: var(--sp-6); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   INTRO — black band
+───────────────────────────────────────────────────────────── */
+.intro {
+  background: var(--c-black);
+  color: var(--c-white);
+  padding-block: var(--section-pad);
+  overflow: hidden;
+}
+
+.intro__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-50);
+}
+
+.intro__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-20);
+}
+
+.intro__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lh-lead, 1.3em);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+
+/* The blank line between the two Figma paragraphs is one full
+   leading unit, not an arbitrary margin. */
+.intro__copy { gap: calc(var(--fs-lead) * var(--lh-lead)); }
+
+/* Signature artwork. Height-driven so the 175:75 ratio is preserved
+   at every breakpoint; width follows from aspect-ratio. */
+.intro__signature {
+  line-height: 0;
+}
+
+.intro__signature-svg {
+  display: block;
+  height: var(--signature-h);
+  width: auto;
+  aspect-ratio: 175 / 75;
+  overflow: visible; /* round linecaps sit slightly outside the viewBox */
+}
+
+/* Brand grid — 4 across, each cell locked to the Figma ratio. */
+.brands {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-2);
+}
+
+.brands__item {
+  aspect-ratio: var(--logo-ar);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--c-white);
+}
+
+.brands__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .brands { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   WORKS
+───────────────────────────────────────────────────────────── */
+.works {
+  /* Symmetric 120px. Was 200 on top to open the section away from the
+     black intro band above it; now matched to the bottom. */
+  padding-block: var(--sp-30);
+}
+
+.works__row { gap: var(--works-gap); }
+
+/* The label rides along while the four cards scroll past it. */
+.works__label {
+  position: sticky;
+  top: calc(var(--nav-pad-y) * 2 + var(--lh-mono-sm) * var(--fs-mono-sm) + var(--sp-6));
+  padding-block: var(--sp-4);
+}
+
+.works__list {
+  display: flex;
+  flex-direction: column;
+  /* 64px, and 40px at <=560 — --sp-16 already steps to exactly those two
+     values, so this needs no breakpoint of its own. Visible whitespace
+     between artworks is this plus the cards' own 24px padding each. */
+  gap: var(--sp-16);
+}
+
+.work {
+  position: relative; /* containing block for the stretched link */
+  display: flex;
+  align-items: center;
+  gap: var(--sp-16);
+  padding: var(--sp-6);
+}
+
+/* Whole-card hit area, at every viewport.
+   `inset: 0` tracks whatever size and direction the card currently has,
+   so this needs no breakpoint of its own. z-index lifts it over
+   .work__media and the mockup panel, which are positioned and would
+   otherwise sit on top.
+   It is a direct child of .work by necessity — see the note in the
+   markup: the index and text are transformed by GSAP, and a transform makes an
+   element both a containing block and a stacking context, so an overlay
+   nested inside it is trapped at that element's bounds.
+   Deliberately ONE link per card: the image and the button used to be
+   separate anchors to the same href, which is two extra tab stops and
+   two redundant announcements. The button is decorative now
+   (aria-hidden) and the name comes from the overlay's aria-label. */
+.work__link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+.work__link:focus-visible {
+  outline: 2px solid var(--c-ink);
+  outline-offset: -4px;
+}
+
+/* The Figma's first card isn't a permanent "featured" state — it's the
+   hover state, drawn once for reference. So every card gets it. */
+.work {
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.work:hover { background: var(--c-surface); }
+
+.work__media {
+  position: relative;
+  flex: 0 1 var(--work-img-w);
+  aspect-ratio: var(--work-img-ar);
+  overflow: hidden;
+  display: block;
+}
+
+.work__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Overscaled to give the parallax drift room. The scale sets the
+     ceiling on that drift: safe travel is 50*(scale-1)/scale percent,
+     so 1.28 allows ±10.94% and works.js uses ±10. Reduce this and the
+     parallax must come down with it or the crop shows through. */
+  transform: scale(var(--work-img-scale));
+  will-change: transform;
+}
+
+/* The white plate the mockup sits on — always dead centre of the
+   artwork, on both axes.
+   Centred rather than offset from the top: the Figma's 80px top inset
+   happens to be exactly half the leftover space, so centring reproduces
+   it at the design size AND holds as the image goes fluid. A top offset
+   (px or %) is one number that has to be kept in agreement with the
+   panel's height; centring can't drift.
+   Centred with `inset: 0` + `margin: auto` and NO transform, on purpose.
+   GSAP animates this element's transform for the entrance, and it
+   consolidates transforms — it discards the `translate` property and
+   rewrites everything into `transform`, which silently dropped a
+   `translate: -50% -50%` and left the panel half its own height too low.
+   margin-auto centring lives outside `transform`, so the two can't
+   collide.
+   Both axes need an explicit size for that to work: with `inset: 0` and
+   an auto height the box stretches and `aspect-ratio` is ignored. Both
+   are percentages of the same media box, so the panel still holds its
+   512:304 proportion — 512/720 wide by 304/464 tall. */
+.work__panel {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: calc(var(--work-panel-w) / var(--work-img-wn) * 100%);
+  height: calc(var(--work-panel-h) / var(--work-img-hn) * 100%);
+  background: var(--c-white);
+  border-radius: var(--r-sm);
+}
+
+/* Basis 300 rather than 0 is what keeps the details usable beside the
+   image at mid widths. With basis 0 the column had no size of its own,
+   so the 720px image took everything and the description collapsed to
+   one word per line. Now both columns carry a basis and shrink in
+   proportion, so the split degrades instead of one side winning.
+
+   space-between with exactly two children pins the index to the top and
+   the title + description to the bottom, against the base of the
+   artwork. */
+.work__info {
+  flex: 1 1 300px;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sp-16);
+}
+
+.work__index {
+  font-size: var(--fs-mono-xs);
+  line-height: var(--lh-mono-xs);
+  text-transform: none;
+}
+
+.work__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.work__title {
+  font-size: var(--fs-title);
+  line-height: var(--lh-title);
+  font-weight: var(--fw-semibold);
+}
+
+.work__desc {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+}
+
+/* ── Custom cursor ─────────────────────────────────────────────
+   Three layers built by cursor.js: a dot at the pointer, a ring
+   trailing behind it, and a "Read more" chip that takes over on a work
+   card. All share the same two-node shape —
+
+     .cursor-layer          GSAP writes x/y here, and only x/y
+       └ .cursor-*__inner   CSS owns centring, scale, opacity
+
+   — because GSAP resets an element's `translate`/`scale` properties
+   when it takes over that element's transform. Centring the node GSAP
+   moves gets silently wiped; that bug left the chip half its own width
+   off the pointer. Keep the two concerns on separate nodes. */
+.cursor-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none; /* must never eat the click it advertises */
+  will-change: transform;
+}
+
+/* Difference blending goes on the OUTER node. The outer already creates
+   a stacking context (will-change: transform), which would trap an
+   inner element's blend mode inside the layer and blend it against
+   nothing. Applied here, the layer composites against the page.
+
+   The RESTING CIRCLE needs this — it crosses white sections, black
+   bands and photographs, and no fixed colour stays visible across all
+   three. The EXPANDED PILL does not: it only ever opens over a work
+   card, and inverting it against the artwork underneath turned it into
+   shifting painting colours instead of a clean chip. So the pill drops
+   the blend and states its colours outright, below. */
+.cursor-layer { mix-blend-mode: difference; }
+
+/* The circle. It IS the pill — it widens and squares off its radius
+   rather than being swapped for a second element, so the label appears
+   to grow out of the cursor.
+   Centring lives in this one transform, so there is no separate
+   `translate`/`scale` property for GSAP to reset. */
+.cursor__bubble {
+  position: relative;
+  display: block;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  border-radius: var(--r-pill);
+  background: #fff; /* inverted by the blend — see tokens */
+
+  transform: translate(-50%, -50%) scale(0.3);
+  opacity: 0;
+  transition:
+    width var(--dur-base) var(--ease-out),
+    height var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+/* Absolutely positioned so its width never constrains the circle, and
+   so it stays measurable at natural size while hidden — cursor.js reads
+   that width to know how far the pill has to open. */
+.cursor__label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000; /* difference makes this white on white, black on black */
+
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-mono-xs);
+  line-height: var(--lh-mono-xs);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+/* Awake = the pointer has been seen and is inside the window. */
+html.cursor-awake .cursor__bubble {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* Enlarged plain circle — no label, just a bigger dot. The width/height
+   transition already declared on .cursor__bubble does the easing, so
+   this is only the target size.
+   Declared BEFORE the pill rules so that if an element ever nests one
+   state inside the other, the labelled pill wins. */
+html.cursor-lg .cursor__bubble {
+  width: var(--cursor-lg);
+  height: var(--cursor-lg);
+}
+
+/* Expanded into the labelled pill: solid black with white text, no
+   inversion. Over a white ground the resting circle already reads as
+   black, so dropping the blend here is visually continuous — the colour
+   only changes where it was wrong before, over the artwork. */
+html.cursor-read .cursor-layer { mix-blend-mode: normal; }
+
+html.cursor-read .cursor__bubble {
+  width: var(--cursor-open-w);
+  height: var(--cursor-open-h);
+  background: var(--c-black);
+}
+
+html.cursor-read .cursor__label { color: var(--c-white); }
+
+html.cursor-awake.cursor-read .cursor__label { opacity: 1; }
+
+/* Details stay to the RIGHT of the image all the way down to tablet;
+   only there does the card stack. Above this the two columns shrink in
+   proportion (see the flex basis on .work__info) rather than one
+   collapsing.
+   A viewport media query, not a container query, because the intent is
+   "until tablet" — a device threshold, not a card-width one. 900px is
+   the project's tablet step, the same place the label column stacks. */
+@media (max-width: 900px) {
+  /* Padding 0 from tablet down: the hover tint is a pointer affordance
+     and there is no hover on touch, so the inset it used to sit in is
+     just wasted width. */
+  .work { flex-direction: column; align-items: stretch; gap: var(--sp-8); padding: 0; }
+  .work__media { flex-basis: auto; }
+  .work__info { flex-basis: auto; gap: var(--sp-8); }
+  .works__label { position: static; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CTA — closing black band
+───────────────────────────────────────────────────────────── */
+/* Figma pads this section 200px on all four sides, not the 120px
+   gutter the rest of the page uses. */
+.cta {
+  background: var(--c-black);
+  color: var(--c-white);
+  padding: var(--footer-pad) var(--footer-pad-x);
+  /* Containing block for the kinetic layer. Deliberately `relative`
+     and not a stacking context — the custom cursor blends against the
+     page with mix-blend-mode, and isolating this band would sever it. */
+  position: relative;
+  overflow: hidden;
+}
+
+/* KINETIC GRID — the band's backdrop.
+   Just a stage: kinetic.js appends the canvas. The canvas is left
+   transparent and the band paints its own --c-black underneath, so
+   there is no second background colour to keep in step with it. */
+.kinetic {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.kinetic canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cta__inner {
+  /* Positioned so it paints ABOVE the kinetic layer. Absolutely
+     positioned siblings paint after in-flow content, so without this
+     the canvas would cover the headline. */
+  position: relative;
+  max-width: var(--shell);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--sp-16);
+}
+
+.cta__headline {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+  font-weight: var(--fw-medium);
+  text-transform: none;
+}
+
+.cta__line { display: block; }
+
+.cta__line--end { text-align: right; }
+
+.cta__actions {
+  display: flex;
+  gap: var(--sp-6);
+}
+
+@media (max-width: 900px) {
+  .cta__inner { align-items: stretch; }
+  .cta__line--end { text-align: left; }
+  .cta__actions { justify-content: flex-start; }
+}
+
+
+/* =============================================================
+   MOBILE RHYTHM (<=560)
+   Vertical padding stated outright rather than inherited from the
+   spacing scale, which produced awkward values (72px hero, 56px
+   sections) once the scale was tuned for desktop. Horizontal padding
+   comes from the single 20px --gutter, so nothing needs restating.
+   ============================================================= */
+@media (max-width: 560px) {
+  /* Hero already reads --hero-pad-y (80px at this width). */
+
+  .intro,
+  .works {
+    padding-block: var(--sec-pad-y);
+  }
+
+  .cta {
+    padding-block: var(--sec-pad-y);
+  }
+}

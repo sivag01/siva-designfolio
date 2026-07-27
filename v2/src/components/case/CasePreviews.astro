@@ -1,0 +1,61 @@
+---
+/**
+ * The black "Design Previews" band: a split display heading over a stack
+ * of full-width previews. Figma 2044:455 — 152px type, 800px-tall
+ * previews at 8px radius, 80px apart, 120px section padding.
+ *
+ * The closing statement is optional (`statement`), and the number of
+ * previews is whatever the page passes — one case study can show two,
+ * another six.
+ */
+interface Props {
+  headingStart: string;
+  headingEnd: string;
+  previews?: ImageMetadata[];
+  /** How many placeholders to draw when no images are supplied. */
+  placeholderCount?: number;
+  label?: string;
+  statement?: string;
+}
+const {
+  headingStart,
+  headingEnd,
+  previews = [],
+  placeholderCount = 4,
+  label,
+  statement,
+} = Astro.props;
+
+const slots = previews.length ? previews : Array(placeholderCount).fill(null);
+---
+
+<section class="previews">
+  <div class="previews__inner">
+    <h2 class="previews__heading mono">
+      <span class="previews__line previews__line--start" data-preview-line>{headingStart}</span>
+      <span class="previews__line previews__line--end" data-preview-line>{headingEnd}</span>
+    </h2>
+
+    <div class="previews__stack">
+      {slots.map((img, i) => (
+        <figure class="preview" data-preview>
+          {img ? (
+            <img src={img.src} width={img.width} height={img.height} alt="" loading="lazy" />
+          ) : (
+            <div class="preview__placeholder" aria-hidden="true"></div>
+          )}
+        </figure>
+      ))}
+    </div>
+
+    {statement && (
+      <>
+        <hr class="previews__rule" />
+        <div class="previews__note">
+          {label && <p class="previews__label mono">{label}</p>}
+          <p class="previews__statement" set:html={statement.replace(/\n\n/g, '<br /><br />')} />
+        </div>
+      </>
+    )}
+  </div>
+</section>

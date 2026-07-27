@@ -1,0 +1,256 @@
+/* =============================================================
+   DESIGN TOKENS — SG Portfolio v2
+   Values transcribed 1:1 from Figma node 2034:92 (1728px frame).
+   Single source of truth. Nothing below this file hardcodes a
+   colour, size or duration.
+   ============================================================= */
+
+:root {
+
+  /* -----------------------------------------------------------
+     COLOUR
+  ----------------------------------------------------------- */
+  --c-black:        #000000;
+  --c-white:        #ffffff;
+  --c-surface:      #f5f5f5;   /* featured work card background */
+  --c-border:       #e5e5e5;   /* work card button outline */
+  --c-muted:        #a1a1a1;   /* section labels on black */
+
+  /* -----------------------------------------------------------
+     GLASS — hero portrait frame
+     The complete material. Four values, no other effects.
+  ----------------------------------------------------------- */
+  --glass-fill:     rgba(0, 0, 0, 0.04);  /* dark veil, 4% */
+  --glass-blur:     2px;                  /* backdrop blur */
+  --glass-border:   #ffffff;              /* white border */
+  /* Inner glow: 0 2px 16px 0 #FFF inset */
+  --glass-glow-y:   2px;
+  --glass-glow:     16px;
+  --glass-glow-ink: #ffffff;
+
+  --c-dot-ring:     #b9f8cf;   /* availability dot — outer */
+  --c-dot-core:     #00a63e;   /* availability dot — inner */
+
+  --dot-size:        10px;
+  --dot-core:        6px;
+
+  /* Hero marquee type. The Figma exports the word field as a flat
+     image at 32% opacity over white; this is that value baked into
+     the ink so the rows need no group-opacity layer. */
+  --c-marquee-ink:  rgba(0, 0, 0, 0.32);
+
+  --c-ink:          var(--c-black);
+  --c-ink-invert:   var(--c-white);
+
+  /* -----------------------------------------------------------
+     TYPEFACES
+     No script face: the signature is real vector artwork
+     (signature.svg), so the font substitution the Figma needed is
+     gone entirely.
+  ----------------------------------------------------------- */
+  --font-mono:   'Geist Mono', ui-monospace, 'SF Mono', monospace;
+  --font-sans:   'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+
+  /* -----------------------------------------------------------
+     TYPE SCALE
+     Figma tracking is uniform once normalised: every mono size
+     sits at -0.02em, the display line at -0.05em.
+  ----------------------------------------------------------- */
+  --track-mono:    -0.02em;
+  --track-display: -0.05em;
+
+  --fs-mono-xs:    0.75rem;    /* 12px — work index, read more */
+  --lh-mono-xs:    1.3333;     /* 16px */
+
+  --fs-mono-sm:    0.875rem;   /* 14px — nav links, pills */
+  --lh-mono-sm:    1.2857;     /* 18px */
+
+  --fs-mono-base:  1rem;       /* 16px — wordmark, section labels */
+  --lh-mono-base:  1.5;        /* 24px */
+
+  --fs-body:       1rem;       /* 16px — work description */
+  --lh-body:       1.5;        /* 24px */
+
+  --fs-title:      1.25rem;    /* 20px — work title */
+  --lh-title:      1.4;        /* 28px */
+
+  --fs-lead:       clamp(1.5rem, 2.32vw, 2.5rem);   /* 40px @1728 */
+  --lh-lead:       1.3;                              /* 52px */
+
+  /* Signature is artwork now, not type — sized by height. */
+  --signature-h:   clamp(56px, 4.6vw, 80px);        /* 80px @1728 */
+
+  --fs-display:    clamp(2.75rem, 8.8vw, 9.5rem);   /* 152px @1728 */
+  --lh-display:    1.0526;                           /* 160px */
+
+  /* -----------------------------------------------------------
+     SPACING — 4px base, Figma values only
+  ----------------------------------------------------------- */
+  --sp-1:   0.25rem;   /*   4px */
+  --sp-2:   0.5rem;    /*   8px */
+  --sp-3:   0.75rem;   /*  12px */
+  --sp-4:   1rem;      /*  16px */
+  --sp-6:   1.5rem;    /*  24px */
+  --sp-8:   2rem;      /*  32px */
+  --sp-16:  4rem;      /*  64px */
+  --sp-20:  5rem;      /*  80px */
+  --sp-30:  7.5rem;    /* 120px */
+  --sp-40:  10rem;     /* 160px */
+  --sp-50:  12.5rem;   /* 200px */
+
+  /* -----------------------------------------------------------
+     LAYOUT
+     One horizontal inset for the whole page: 40px, matching the nav.
+     `--gutter` is the single source — the nav and the closing band
+     both read from it, so nothing can drift out of alignment.
+
+     --shell must stay in step. It caps the content measure, and if the
+     cap is lower than (viewport - 2 x gutter) then the CAP decides the
+     inset, not the padding, and the 40px never appears. At 1648 the two
+     agree exactly at the 1728 design width; above that the page centres.
+  ----------------------------------------------------------- */
+  --shell:       1648px;     /* 1728 design frame - 2 x 40 gutter */
+  --gutter:      2.5rem;     /* 40px */
+  --nav-pad-x:   var(--gutter);
+  --nav-pad-y:   var(--sp-4);
+  /* Label column and the works gutter both scale, because they sit
+     between the viewport and the card. Held at 200/120 they eat 320px
+     before the card even starts, which is what squeezed the details
+     column to ~14 characters per line at tablet widths. Fluid instead
+     of stepped so the image doesn't jump at a breakpoint. */
+  --label-col:   clamp(120px, 11.6vw, 200px);   /* 200 @1728 */
+  --label-gap:   var(--sp-40);
+  --works-gap:   clamp(3rem, 7vw, 7.5rem);      /* 48 → 120 @1728 */
+  --section-pad:  var(--sp-30);
+  --footer-pad:   var(--sp-50);
+  --footer-pad-x: var(--gutter);
+
+  --hero-h:      800px;
+  /* Hero vertical padding. Proportional to the hero height by default
+     (so it tracks 800/680/560), but a token so mobile can state it
+     outright instead of inheriting an awkward 72px. */
+  --hero-pad-y:  calc(var(--hero-h) * 0.15);
+  /* Marquee metrics, read off the Figma word-field export. */
+  --marquee-fs:  1rem;      /* 16px */
+  --marquee-row: 40px;      /* row pitch */
+  --marquee-gap: 40px;      /* space between words */
+  --marquee-dur: 70s;       /* one full set traversal */
+  /* The image's preferred width. Fluid so it yields room to the details
+     column as the card narrows, instead of holding 720px and starving
+     it. Lands exactly on the Figma's 720 at the 1728 design width. */
+  --work-img-w:  clamp(360px, 42vw, 720px);
+  --work-img-ar: 720 / 464;
+  /* Overscale that gives the parallax its headroom. Paired with the
+     ±10% travel in works.js — see the note on .work__media img. */
+  --work-img-scale: 1.28;
+  /* Unitless — these feed aspect-ratio and a ratio calc(), neither
+     of which accepts lengths. */
+  --work-panel-w: 512;
+  --work-panel-h: 304;
+  --work-img-wn:  720;
+  --work-img-hn:  464;
+  --portrait-w:  440px;
+  /* No --portrait-ar: the photo frame derives its height from the image
+     so the file's original aspect ratio is preserved uncropped. */
+  --logo-ar:     276 / 110;
+
+  /* -----------------------------------------------------------
+     RADIUS
+  ----------------------------------------------------------- */
+  --r-sm:   8px;
+  --r-lg:   24px;   /* portrait photo — its only consumer */
+  --r-xl:   64px;
+  --r-pill: 999px;
+
+  /* -----------------------------------------------------------
+     MOTION
+     One easing vocabulary so every section feels related.
+  ----------------------------------------------------------- */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --dur-fast: 0.25s;
+  --dur-base: 0.5s;
+  --dur-slow: 0.9s;
+
+  --z-nav: 100;
+  --z-cursor: 200;   /* above the nav — it replaces the pointer */
+
+  /* -----------------------------------------------------------
+     CUSTOM CURSOR
+     One circle that expands into a labelled pill. Painted WHITE with
+     a BLACK label and composited via mix-blend-mode: difference, which
+     inverts the whole thing against its backdrop:
+
+       over white → black pill, white label
+       over black → white pill, black label
+
+     Both legible, from one set of colours. A fixed colour would
+     disappear on the black intro and closing bands.
+
+     The open size HUGS the label: cursor.js measures the label box and
+     writes --cursor-open-w / --cursor-open-h as label + padding. They
+     have to be real lengths rather than `max-content`, because `width`
+     and `height` only interpolate between two definite values — a pill
+     sized by content would snap open instead of growing.
+  ----------------------------------------------------------- */
+  --cursor-size:   12px;   /* resting circle */
+  --cursor-lg:     200px;  /* enlarged circle, e.g. over Next project */
+  --cursor-pad-x:  16px;   /* pill padding, left + right */
+  --cursor-pad-y:  8px;    /* pill padding, top + bottom */
+  /* Fallbacks only — overwritten by the measurement on init. */
+  --cursor-open-w: 96px;
+  --cursor-open-h: 32px;
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVE OVERRIDES
+   Only tokens change here — no layout rules. Sections adapt by
+   reading the same variables.
+
+   NOTE: --gutter is deliberately absent below. It stays 40px at every
+   width so the page keeps one horizontal inset, and the nav and closing
+   band inherit it. Vertical rhythm still steps down.
+----------------------------------------------------------- */
+@media (max-width: 1280px) {
+  :root {
+    --label-gap: var(--sp-20);
+    --sp-50:     8rem;
+    --hero-h:    680px;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --label-col:   100%;
+    --label-gap:   var(--sp-6);
+    --sp-50:       5rem;
+    --sp-40:       4rem;
+    --sp-30:       3.5rem;
+    --hero-h:      560px;
+    --portrait-w:  min(340px, 80vw);
+    --r-xl:        40px;
+    --r-lg:        20px;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    /* One 20px gutter at mobile — nav, hero, the shells and the closing
+       band all read from this, so the wordmark stays aligned with the
+       section content. */
+    --gutter:     1.25rem;   /* 20px */
+    --hero-pad-y: 5rem;      /* 80px */
+    --sec-pad-y:  2.5rem;    /* 40px — intro, works, cta and every
+                                case-study band */
+    --sp-50:   4rem;
+    --sp-20:   3rem;
+    --sp-16:   2.5rem;
+    --hero-h:  480px;
+    --fs-title: 1.125rem;
+  }
+}

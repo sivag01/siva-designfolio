@@ -1,0 +1,26 @@
+---
+/**
+ * Optional stats row. Not in the Figma detail page — this exists because
+ * case studies need to differ: include it on a page that has numbers to
+ * show, leave it out on one that doesn't.
+ */
+interface Props {
+  label?: string;
+  stats: { value: string; caption: string }[];
+}
+const { label = 'Outcomes', stats } = Astro.props;
+---
+
+<section class="case-stats">
+  <div class="shell case-stats__inner">
+    <p class="case-stats__label mono">{label}</p>
+    <dl class="case-stats__grid">
+      {stats.map((s) => (
+        <div class="case-stat">
+          <dt class="case-stat__value">{s.value}</dt>
+          <dd class="case-stat__caption">{s.caption}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

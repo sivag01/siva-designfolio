@@ -1,0 +1,29 @@
+---
+/**
+ * A labelled block of body copy in two columns. Figma 2044:442 — the
+ * label sits in the same 200px rail as the header, the copy area is
+ * 928px with an 80px column gap and 40px between rows.
+ *
+ * `rows` is an array of [left, right] pairs, so a page can have one row
+ * or several without changing the component.
+ */
+interface Props {
+  label: string;
+  rows: [string, string][];
+}
+const { label, rows } = Astro.props;
+---
+
+<section class="case-text">
+  <div class="shell case-text__inner">
+    <p class="case-text__label mono">{label}</p>
+    <div class="case-text__body">
+      {rows.map(([left, right]) => (
+        <div class="case-text__row">
+          <p>{left}</p>
+          <p>{right}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

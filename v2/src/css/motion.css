@@ -1,0 +1,141 @@
+/* =============================================================
+   MOTION — pre-animation states + reduced-motion escape hatch
+
+   Every rule here is scoped to `html.js`, which an inline script
+   in <head> sets before first paint. If the JS bundle fails to
+   load or a browser blocks modules, the class is still there but
+   GSAP never runs — so each state below is paired with a
+   `@media (prefers-reduced-motion)` and a `.is-ready` fallback
+   that returns the element to its resting appearance.
+   ============================================================= */
+
+/* Elements only hide once we know GSAP is about to drive them. */
+html.js.motion-ready [data-reveal-lines] .line__inner,
+html.js.motion-ready [data-signature-svg],
+html.js.motion-ready [data-brands] .brands__item,
+html.js.motion-ready [data-work-panel],
+html.js.motion-ready [data-work] .work__index,
+html.js.motion-ready [data-work] .work__text,
+html.js.motion-ready [data-cta-line] {
+  will-change: transform, opacity;
+}
+
+/* ── Line reveal ───────────────────────────────────────────── */
+/* Built by splitLines(): each visual line becomes a clipping
+   .line with a .line__inner that slides up out of it. */
+
+/* Measurement pass only; replaced within the same task, never painted.
+   MUST stay `inline` — `inline-block` makes each word an atomic box
+   and the browser fits a different number of words per line than the
+   real text does, so the measured break points come back wrong. */
+.split-word { display: inline; }
+
+.line {
+  display: block;
+  overflow: hidden;
+}
+
+.line__inner {
+  display: block;
+  transform-origin: left bottom;
+}
+
+/* The pre-state lives on the BLOCK, not the lines. Splitting waits for
+   the webfont, so the block must stay invisible until its lines exist
+   and are masked — intro.js reveals it in the same task as the split.
+   Opacity here (rather than a transform on .line__inner) is load-
+   bearing: a CSS `translateY(110%)` gets read into GSAP's `y` as
+   pixels, which then survives animating `yPercent` to 0 and leaves
+   every line permanently offset. */
+html.js.motion-ready [data-reveal-lines] { opacity: 0; }
+
+/* ── Signature handwriting ─────────────────────────────────── */
+/* Held invisible only until intro.js has set each path's dasharray and
+   dashoffset; it reveals the SVG in the same task. Without this the
+   fully-drawn signature paints for one frame before the dashes land. */
+html.js.motion-ready [data-signature-svg] { opacity: 0; }
+
+/* ── Brand grid ────────────────────────────────────────────── */
+html.js.motion-ready [data-brands] .brands__item {
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+}
+
+.brands__item {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.brands__item:hover { transform: translateY(-4px); }
+
+/* ── Work cards ────────────────────────────────────────────── */
+html.js.motion-ready [data-work-panel] {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+html.js.motion-ready [data-work] .work__index,
+html.js.motion-ready [data-work] .work__text {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+/* ── CTA headline ──────────────────────────────────────────── */
+html.js.motion-ready .cta__line--start { opacity: 0; transform: translateX(-8%); }
+html.js.motion-ready .cta__line--end   { opacity: 0; transform: translateX(8%); }
+
+
+/* ── Case study ────────────────────────────────────────────────── */
+html.js.motion-ready [data-preview] {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+html.js.motion-ready .previews__line--start { opacity: 0; transform: translateX(-8%); }
+html.js.motion-ready .previews__line--end   { opacity: 0; transform: translateX(8%); }
+
+/* Overscale gives the cover parallax its headroom — the same
+   50*(scale-1)/scale ceiling as the work cards, so 1.28 permits the
+   ±10% used in case.js. */
+[data-case-cover] img { transform: scale(var(--work-img-scale)); }
+
+/* ── Magnetic buttons ──────────────────────────────────────── */
+[data-magnetic] { will-change: transform; }
+
+/* =============================================================
+   REDUCED MOTION
+   Kill every pre-animation state and every transition. Content
+   renders in its final position with no movement at all.
+   ============================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html.js.motion-ready [data-reveal-lines],
+  html.js.motion-ready [data-signature-svg],
+  html.js.motion-ready [data-brands] .brands__item,
+  html.js.motion-ready [data-work-panel],
+  html.js.motion-ready [data-work] .work__index,
+  html.js.motion-ready [data-work] .work__text,
+  html.js.motion-ready .cta__line--start,
+  html.js.motion-ready .cta__line--end,
+  html.js.motion-ready [data-preview],
+  html.js.motion-ready .previews__line--start,
+  html.js.motion-ready .previews__line--end {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  .work__media img,
+  [data-case-cover] img { transform: scale(1) !important; }
+
+  /* Freeze the marquee in place — the rows stay, the scrolling stops,
+     which is exactly the static word field the Figma shows. */
+  .marquee__track { animation: none !important; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,21 @@
+---
+/**
+ * Full-bleed cover image, 1728x720 in the Figma. `image` is an imported
+ * asset so the intrinsic size comes from the file.
+ */
+interface Props {
+  image?: ImageMetadata;
+  alt?: string;
+}
+const { image, alt = '' } = Astro.props;
+---
+
+<figure class="case-cover" data-case-cover>
+  {image ? (
+    <img src={image.src} width={image.width} height={image.height} alt={alt} />
+  ) : (
+    /* No artwork in the Figma yet — a sized placeholder holds the
+       layout so the page reads correctly before images land. */
+    <div class="case-cover__placeholder" aria-hidden="true"></div>
+  )}
+</figure>

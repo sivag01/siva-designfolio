@@ -1,0 +1,21 @@
+---
+/**
+ * Closing "Next project" band. Figma 2044:541 — 152px type with a 120px
+ * arrow, 120px section padding plus 64px/24px inner padding.
+ * The whole band is the link, so the hit area matches what it advertises.
+ */
+interface Props {
+  href: string;
+  label?: string;
+  /** Name of the project being linked to, for the accessible name. */
+  next: string;
+}
+const { href, label = 'Next project', next } = Astro.props;
+---
+
+<a class="next" href={href} data-cursor="lg" aria-label={`Next project — ${next}`}>
+  <div class="next__inner">
+    <span class="next__label mono">{label}</span>
+    <span class="next__arrow" aria-hidden="true"></span>
+  </div>
+</a>

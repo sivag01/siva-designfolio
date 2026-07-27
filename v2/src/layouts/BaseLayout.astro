@@ -1,0 +1,84 @@
+---
+/**
+ * The one <head> and the one Nav. Every page renders through this, so
+ * fonts, stylesheets, the pre-paint script and the nav are defined in a
+ * single place.
+ *
+ * Per-page metadata comes in as props rather than being hardcoded, which
+ * is what lets each case study be shared on its own with the right
+ * title, description and preview image.
+ */
+import Nav from '../components/Nav.astro';
+
+import '../css/tokens.css';
+import '../css/base.css';
+import '../css/sections.css';
+import '../css/motion.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Absolute path or imported asset src, used for og:image. */
+  ogImage?: string;
+  /** Which nav link to light on arrival. */
+  navActive?: 'works' | 'about' | null;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/og-default.png',
+  navActive = null,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://sivaganesh.design');
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content="Sivaganesh" />
+  <link rel="canonical" href={canonical} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400..600&family=Inter:wght@400;500;600&display=swap"
+  />
+
+  <!-- Runs before first paint so motion.css can hide animated elements
+       without a flash. `motion-ready` is added by site.js only once GSAP
+       has loaded, so a JS failure leaves everything visible rather than
+       blank. -->
+  <script is:inline>document.documentElement.classList.add('js');</script>
+
+  <slot name="head" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <Nav active={navActive} />
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <slot name="scripts" />
+</body>
+</html>

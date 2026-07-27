@@ -1,0 +1,47 @@
+---
+/**
+ * Facilio. Full composition: header, cover, two text blocks, stats,
+ * previews, next.
+ */
+import CaseLayout from '../../layouts/CaseLayout.astro';
+import CaseHeader from '../../components/case/CaseHeader.astro';
+import CaseCover from '../../components/case/CaseCover.astro';
+import CaseText from '../../components/case/CaseText.astro';
+import CaseStats from '../../components/case/CaseStats.astro';
+import CasePreviews from '../../components/case/CasePreviews.astro';
+import NextProject from '../../components/case/NextProject.astro';
+import { bySlug, hrefOf, nextAfter, LEAD, GAP, RESPONSIBILITIES } from '../../data/works.js';
+
+const work = bySlug('facilio');
+const next = nextAfter('facilio');
+---
+
+<CaseLayout
+  title={`${work.name} — Case study · Sivaganesh`}
+  description={work.tagline}
+  ogImage={work.cover.src}
+>
+  <CaseHeader company={work.name} responsibilities={RESPONSIBILITIES} statement={LEAD} />
+  <CaseCover alt={`${work.name} brand refresh`} />
+
+  <CaseText label="A quick intro" rows={[[LEAD, GAP], [LEAD, GAP]]} />
+  <CaseText label="The approach" rows={[[LEAD, GAP]]} />
+
+  <CaseStats
+    stats={[
+      { value: '60%', caption: 'Faster onboarding' },
+      { value: '50+', caption: 'Global deployments' },
+      { value: '95%', caption: 'Customer retention' },
+    ]}
+  />
+
+  <CasePreviews
+    headingStart="Design"
+    headingEnd="Previews"
+    placeholderCount={4}
+    label="A quick intro"
+    statement={`${LEAD}\n\n${GAP}`}
+  />
+
+  <NextProject href={hrefOf(next.slug)} next={next.name} />
+</CaseLayout>

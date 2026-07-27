@@ -1,0 +1,36 @@
+---
+/**
+ * Case study header: two metadata blocks in a left rail — company at
+ * the top, responsibilities at the foot — with the opening statement on
+ * the right. Figma 2044:433 — 200px rail, 360px gap.
+ */
+interface Props {
+  company: string;
+  responsibilities: string[];
+  statement: string;
+}
+const { company, responsibilities, statement } = Astro.props;
+---
+
+<header class="case-head">
+  <div class="shell case-head__inner">
+    <div class="case-head__rail mono">
+      <div class="case-head__meta">
+        <p class="case-head__label">Company</p>
+        <p class="case-head__value">{company}</p>
+      </div>
+
+      <div class="case-head__meta">
+        <p class="case-head__label">Responsibilities</p>
+        <!-- A list rather than one separator-joined string: the dots
+             are drawn in CSS, so a narrow rail can only break BETWEEN
+             items and never mid-phrase. -->
+        <ul class="case-head__list">
+          {responsibilities.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <p class="case-head__statement">{statement}</p>
+  </div>
+</header>

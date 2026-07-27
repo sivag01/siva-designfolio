@@ -1,0 +1,426 @@
+/* =============================================================
+   CASE STUDY — sections used only by the detail pages.
+   Values transcribed from Figma node 2044:316 (1728px frame).
+   Loaded by CaseLayout, so the home page never downloads it.
+   ============================================================= */
+
+:root {
+  /* The detail page uses a wider label→content gap than the home page
+     (360 vs 120) and a fixed copy measure. Both scale so the rail never
+     eats the copy at mid widths — same reasoning as --works-gap. */
+  --case-gap:      clamp(3rem, 20.8vw, 22.5rem);   /* 360 @1728 */
+  --case-copy:     928px;
+
+  /* The HEADER inverts that proportion: a 360px rail against a 200px
+     gap, where every section below it is 200 against 360. Written as
+     the two existing tokens swapped rather than as fresh clamps, which
+     is what keeps rail + gap summing to the same 560 at every width —
+     so the statement's left edge stays locked to the body copy in the
+     sections underneath, and the statement's own width is unchanged. */
+  --case-head-rail: var(--case-gap);    /* 360 @1728 */
+  --case-head-gap:  var(--label-col);   /* 200 @1728 */
+  /* Vertical rhythm inside the previews band: heading, stack, rule,
+     note. It was --sp-50 (200px at desktop), which is the page's
+     largest step and read as a hole between the last preview and the
+     closing note. Its own token now, so it no longer inherits a scale
+     tuned for section padding. */
+  --previews-gap:  5rem;    /* 80px */
+  --case-cover-ar: 1728 / 720;
+  --preview-ar:    1488 / 800;
+  --case-rule:     #262626;
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+.case-head {
+  padding-block: var(--sp-30);
+}
+
+.case-head__inner {
+  display: flex;
+  align-items: stretch;
+  gap: var(--case-head-gap);
+}
+
+/* Company pinned top, responsibilities pinned bottom — space-between
+   across the rail's full height, matching the Figma. */
+.case-head__rail {
+  flex: 0 0 var(--case-head-rail);
+  width: var(--case-head-rail);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sp-16);
+  white-space: nowrap;
+}
+
+.case-head__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.case-head__label {
+  font-size: 0.625rem;   /* 10px */
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: #404040;
+  text-transform: none;
+}
+
+.case-head__value {
+  font-size: var(--fs-mono-base);
+  line-height: var(--lh-mono-base);
+  text-transform: none;
+}
+
+/* Responsibilities. A flex row that wraps BETWEEN items rather than
+   inside them, so the rail breaks the list at the separators and never
+   mid-phrase — "Design / operations" split over two lines is what this
+   avoids. The rail's `white-space: nowrap` holds each item together;
+   flex wrapping is independent of it. */
+.case-head__list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.4em;
+  font-size: var(--fs-mono-base);
+  line-height: var(--lh-mono-base);
+  text-transform: none;
+}
+
+/* The separator rides with the item BEFORE it, so it can never be left
+   hanging at the start of a wrapped line. */
+.case-head__list li:not(:last-child)::after { content: ' \00B7'; }
+
+.case-head__statement {
+  flex: 1 1 0;
+  min-width: 0;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+
+/* ── Cover ────────────────────────────────────────────────────── */
+.case-cover {
+  aspect-ratio: var(--case-cover-ar);
+  overflow: hidden;
+}
+
+.case-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder while the Figma has no artwork. A soft checkerboard,
+   matching how the slot reads in the Figma itself, so it is obviously
+   "image pending" rather than a broken asset. */
+.case-cover__placeholder,
+.preview__placeholder {
+  width: 100%;
+  height: 100%;
+  background:
+    repeating-conic-gradient(
+      var(--c-surface) 0% 25%, #ececec 0% 50%
+    ) 0 0 / 64px 64px;
+}
+
+.case-cover__placeholder { aspect-ratio: var(--case-cover-ar); }
+
+/* ── Body copy blocks ─────────────────────────────────────────── */
+.case-text {
+  padding-block: var(--sp-20);
+}
+
+.case-text__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--case-gap);
+}
+
+.case-text__label {
+  flex: 0 0 var(--label-col);
+  width: var(--label-col);
+  font-size: var(--fs-mono-base);
+  line-height: var(--lh-mono-base);
+  color: #737373;
+  text-transform: none;
+}
+
+.case-text__body {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: var(--case-copy);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+.case-text__row {
+  display: flex;
+  gap: var(--sp-20);
+}
+
+.case-text__row > p {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+/* ── Optional stats ───────────────────────────────────────────── */
+.case-stats {
+  padding-block: var(--sp-20);
+}
+
+.case-stats__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--case-gap);
+}
+
+.case-stats__label {
+  flex: 0 0 var(--label-col);
+  width: var(--label-col);
+  font-size: var(--fs-mono-base);
+  line-height: var(--lh-mono-base);
+  color: #737373;
+  text-transform: none;
+}
+
+.case-stats__grid {
+  flex: 1 1 0;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--sp-16) var(--sp-20);
+}
+
+.case-stat__value {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: clamp(2rem, 3.7vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: var(--track-mono);
+}
+
+.case-stat__caption {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: #737373;
+}
+
+/* ── Design Previews (black band) ─────────────────────────────── */
+.previews {
+  background: var(--c-black);
+  color: var(--c-white);
+  padding: var(--sp-30) var(--gutter);
+  overflow: hidden;
+}
+
+.previews__inner {
+  max-width: var(--shell);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--previews-gap);
+}
+
+.previews__heading {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+  font-weight: var(--fw-medium);
+  text-transform: none;
+  /* Cancels the inner gap back down to --sp-30, so heading -> stack
+     stays 120px however the band's rhythm is retuned. Must reference
+     the SAME token the gap uses; against --sp-50 it would now
+     over-subtract and close the heading onto the first preview. */
+  margin-bottom: calc(var(--sp-30) - var(--previews-gap));
+}
+
+.previews__line { display: block; }
+.previews__line--end { text-align: right; }
+
+.previews__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-20);
+}
+
+.preview {
+  aspect-ratio: var(--preview-ar);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.previews__rule {
+  border: 0;
+  border-top: 1px solid var(--case-rule);
+  margin: 0;
+}
+
+.previews__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--case-gap);
+}
+
+.previews__label {
+  flex: 0 0 var(--label-col);
+  width: var(--label-col);
+  font-size: var(--fs-mono-base);
+  line-height: var(--lh-mono-base);
+  color: var(--c-muted);
+  text-transform: none;
+}
+
+.previews__statement {
+  flex: 1 1 0;
+  min-width: 0;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+
+/* ── Next project ─────────────────────────────────────────────── */
+.next {
+  display: block;
+  padding: var(--sp-30) var(--gutter);
+}
+
+.next__inner {
+  max-width: var(--shell);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-16);
+  padding: var(--sp-6) var(--sp-16);
+}
+
+.next__label {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+  font-weight: var(--fw-medium);
+  text-transform: none;
+  white-space: nowrap;
+}
+
+/* Arrow drawn from the same mask technique as the work card CTA had, so
+   it takes currentColor and needs no second asset. */
+.next__arrow {
+  flex: none;
+  width: clamp(48px, 6.9vw, 120px);
+  aspect-ratio: 1;
+  background: currentColor;
+  -webkit-mask: url('/arrow-forward.svg') no-repeat center / contain;
+  mask: url('/arrow-forward.svg') no-repeat center / contain;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.next:hover .next__arrow { transform: translateX(12px); }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .case-head__inner,
+  .case-text__inner,
+  .case-stats__inner,
+  .previews__note {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-8);
+  }
+
+  .case-head__rail,
+  .case-text__label,
+  .case-stats__label,
+  .previews__label {
+    flex-basis: auto;
+    width: auto;
+  }
+
+  /* 80px above the header at tablet and below. Stated in rem rather
+     than through --sp-20, which is itself rebased to 48px at ≤560 — the
+     point is a fixed 80px across both breakpoints. The foot keeps
+     whatever the section rhythm says. */
+  .case-head { padding-block: 5rem var(--sp-30); }
+
+  /* Stacked, the rail above the statement puts two lines of small
+     metadata before the thing the page is actually about. Reordered so
+     it reads title, then company, then responsibilities — `order` only,
+     so the DOM keeps the desktop reading order for assistive tech. */
+  .case-head__statement { order: -1; }
+
+  /* Company and responsibilities sit side by side; the list wraps
+     inside whatever width is left over. */
+  .case-head__rail {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--sp-16);
+  }
+
+  .case-text__row { flex-direction: column; gap: var(--sp-6); }
+
+  .previews__heading { margin-bottom: 0; }
+  .previews__line--end { text-align: left; }
+
+  /* "Next project" is nowrap at desktop so it stays one line at 152px.
+     At mobile it cannot shrink, so it pushed the arrow 28px past the
+     right edge and widened the layout viewport — allow it to wrap and
+     to shrink instead. */
+  .next__inner {
+    padding: 0;
+    gap: var(--sp-6);
+  }
+
+  .next__label {
+    white-space: normal;
+    min-width: 0;
+  }
+
+  .next__arrow { width: clamp(36px, 12vw, 64px); }
+}
+
+
+/* =============================================================
+   MOBILE RHYTHM (<=560) — mirrors sections.css so a case study reads
+   with the same spacing as the home page.
+   ============================================================= */
+@media (max-width: 560px) {
+  .case-head,
+  .case-text,
+  .case-stats,
+  .previews,
+  .next {
+    padding-block: var(--sec-pad-y);
+  }
+
+  /* Same 80px top as tablet; only the foot differs, keeping the shared
+     40px mobile rhythm. */
+  .case-head { padding-block: 5rem var(--sec-pad-y); }
+
+  /* Side by side leaves the list about 250px to wrap into — one item
+     per line, against a two-line Company block. Stacking reads better
+     at this width. */
+  .case-head__rail {
+    flex-direction: column;
+    gap: var(--sp-6);
+  }
+
+  /* Horizontal comes from --gutter (20px) on the bands that carry it;
+     the full-bleed cover stays edge to edge. */
+  .previews,
+  .next {
+    padding-inline: var(--gutter);
+  }
+}

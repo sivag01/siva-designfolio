@@ -1,0 +1,47 @@
+---
+/**
+ * Zapro. The longest of the four: five previews. Its Next link wraps
+ * back to Facilio — nextAfter() cycles, so the chain never dead-ends.
+ */
+import CaseLayout from '../../layouts/CaseLayout.astro';
+import CaseHeader from '../../components/case/CaseHeader.astro';
+import CaseCover from '../../components/case/CaseCover.astro';
+import CaseText from '../../components/case/CaseText.astro';
+import CaseStats from '../../components/case/CaseStats.astro';
+import CasePreviews from '../../components/case/CasePreviews.astro';
+import NextProject from '../../components/case/NextProject.astro';
+import { bySlug, hrefOf, nextAfter, LEAD, GAP, RESPONSIBILITIES } from '../../data/works.js';
+
+const work = bySlug('zapro');
+const next = nextAfter('zapro');
+---
+
+<CaseLayout
+  title={`${work.name} — Case study · Sivaganesh`}
+  description={work.tagline}
+  ogImage={work.cover.src}
+>
+  <CaseHeader company={work.name} responsibilities={RESPONSIBILITIES} statement={LEAD} />
+  <CaseCover alt={`${work.name} procurement platform`} />
+
+  <CaseText label="A quick intro" rows={[[LEAD, GAP], [LEAD, GAP]]} />
+
+  <CaseStats
+    label="Outcomes"
+    stats={[
+      { value: '70%', caption: 'Faster project delivery' },
+      { value: '500+', caption: 'Projects delivered' },
+      { value: '98%', caption: 'Client satisfaction' },
+    ]}
+  />
+
+  <CasePreviews
+    headingStart="Design"
+    headingEnd="Previews"
+    placeholderCount={5}
+    label="A quick intro"
+    statement={`${LEAD}\n\n${GAP}`}
+  />
+
+  <NextProject href={hrefOf(next.slug)} next={next.name} />
+</CaseLayout>
